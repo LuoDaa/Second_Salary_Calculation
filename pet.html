@@ -35,6 +35,9 @@ body{
   transform:translateX(-50%);filter:drop-shadow(0 24px 28px rgba(0,0,0,.38));
 }
 .html-pet svg{width:100%;height:100%;overflow:visible}
+.html-pet.is-changing .body-core{animation:settle .24s cubic-bezier(.2,.8,.2,1) both}
+.html-pet.is-changing .head-group{animation:headSettle .24s cubic-bezier(.2,.8,.2,1) both}
+.html-pet.is-changing .pet-arm{animation:armSettle .24s cubic-bezier(.2,.8,.2,1) both}
 .pet-body,.pet-head,.pet-ear,.pet-horn,.pet-arm,.pet-leg,.pet-tail,.pet-face,.pet-prop{transform-box:fill-box;transform-origin:center}
 .body-core{animation:breath 2.6s ease-in-out infinite}
 .head-group{animation:headIdle 2.8s ease-in-out infinite;transform-origin:120px 86px}
@@ -53,6 +56,7 @@ body{
 .happy .body-core,.reminder .body-core{animation:happyHop .72s ease-in-out infinite}.happy .arm-left,.reminder .arm-left{animation:waveLeft .62s ease-in-out infinite}.happy .arm-right,.reminder .arm-right{animation:waveRight .62s ease-in-out infinite}
 .reminder .notice-mark{opacity:1;animation:noticePulse .8s ease-in-out infinite}
 @keyframes breath{50%{transform:translateY(-3px) scaleY(1.015)}}@keyframes workBounce{50%{transform:translateY(3px) scaleY(.992)}}@keyframes headIdle{50%{transform:rotate(2deg) translateY(-3px)}}@keyframes headType{50%{transform:rotate(-2deg) translateY(2px)}}@keyframes earTwitch{0%,85%,100%{transform:rotate(0)}90%{transform:rotate(12deg)}}@keyframes tailWag{50%{transform:rotate(18deg)}}@keyframes blink{0%,92%,100%{transform:scaleY(1)}94%{transform:scaleY(.08)}}@keyframes typeLeft{to{transform:rotate(9deg) translate(2px,5px)}}@keyframes typeRight{to{transform:rotate(-10deg) translate(-2px,5px)}}@keyframes screenFlow{to{transform:translateY(8px)}}@keyframes cupDrink{0%,100%{transform:translate(0,0) rotate(0)}45%,70%{transform:translate(-15px,-34px) rotate(-18deg)}}@keyframes drinkArm{0%,100%{transform:rotate(0)}45%,70%{transform:rotate(-42deg) translate(-6px,-8px)}}@keyframes drinkHead{45%,70%{transform:rotate(8deg) translateY(2px)}}@keyframes phoneFloat{50%{transform:translateY(-5px) rotate(6deg)}}@keyframes slackHead{50%{transform:rotate(-8deg) translateY(3px)}}@keyframes slackArm{50%{transform:rotate(20deg) translate(8px,2px)}}@keyframes snackBite{0%,100%{transform:translate(0,0) rotate(0)}45%,72%{transform:translate(25px,-38px) rotate(16deg)}}@keyframes eatArm{45%,72%{transform:rotate(38deg) translate(8px,-4px)}}@keyframes eatHead{45%,72%{transform:rotate(-6deg) translateY(3px)}}@keyframes happyHop{50%{transform:translateY(-10px) scale(1.02)}}@keyframes waveLeft{50%{transform:rotate(-34deg) translate(-3px,-7px)}}@keyframes waveRight{50%{transform:rotate(34deg) translate(3px,-7px)}}@keyframes noticePulse{50%{transform:scale(1.16);opacity:.6}}
+@keyframes settle{0%{transform:translateY(2px) scale(.997)}100%{transform:translateY(0) scale(1)}}@keyframes headSettle{0%{transform:rotate(-1deg) translateY(1px)}100%{transform:rotate(0) translateY(0)}}@keyframes armSettle{0%{transform:rotate(3deg)}100%{transform:rotate(0)}}@keyframes cupDrink{0%,12%,100%{transform:translate(0,0) rotate(0);opacity:.92}42%,72%{transform:translate(-15px,-34px) rotate(-18deg);opacity:1}88%{transform:translate(-3px,-6px) rotate(-4deg)}}@keyframes drinkArm{0%,12%,100%{transform:rotate(0)}42%,72%{transform:rotate(-42deg) translate(-6px,-8px)}88%{transform:rotate(-8deg) translate(-1px,-2px)}}@keyframes drinkHead{0%,12%,100%{transform:rotate(0) translateY(0)}42%,72%{transform:rotate(8deg) translateY(2px)}88%{transform:rotate(1deg) translateY(0)}}@keyframes phoneFloat{0%,100%{transform:translateY(0) rotate(0)}38%{transform:translateY(-5px) rotate(6deg)}76%{transform:translateY(-2px) rotate(-3deg)}}@keyframes slackHead{0%,100%{transform:rotate(0) translateY(0)}45%,70%{transform:rotate(-8deg) translateY(3px)}88%{transform:rotate(-1deg) translateY(0)}}@keyframes slackArm{0%,100%{transform:rotate(0) translate(0,0)}45%,70%{transform:rotate(20deg) translate(8px,2px)}88%{transform:rotate(4deg) translate(1px,0)}}@keyframes snackBite{0%,12%,100%{transform:translate(0,0) rotate(0);opacity:.94}44%,72%{transform:translate(25px,-38px) rotate(16deg);opacity:1}88%{transform:translate(4px,-8px) rotate(3deg)}}@keyframes eatArm{0%,12%,100%{transform:rotate(0) translate(0,0)}44%,72%{transform:rotate(38deg) translate(8px,-4px)}88%{transform:rotate(7deg) translate(1px,-1px)}}@keyframes eatHead{0%,12%,100%{transform:rotate(0) translateY(0)}44%,72%{transform:rotate(-6deg) translateY(3px)}88%{transform:rotate(-1deg) translateY(0)}}@keyframes happyHop{0%,100%{transform:translateY(0) scale(1)}45%{transform:translateY(-10px) scale(1.02)}78%{transform:translateY(2px) scale(.997)}}@keyframes waveLeft{0%,100%{transform:rotate(0) translate(0,0)}45%,70%{transform:rotate(-34deg) translate(-3px,-7px)}88%{transform:rotate(-5deg) translate(0,-1px)}}@keyframes waveRight{0%,100%{transform:rotate(0) translate(0,0)}45%,70%{transform:rotate(34deg) translate(3px,-7px)}88%{transform:rotate(5deg) translate(0,-1px)}}
 
 .money{padding:10px 14px 14px;border-top:1px solid var(--line);background:rgba(255,255,255,.035)}
 .amount{display:flex;align-items:baseline;justify-content:center;gap:2px;font-family:"JetBrains Mono",monospace}
@@ -187,11 +191,13 @@ $("saveBtn").onclick=()=>{cfg={...cfg,salary:$("salary").value,startTime:$("star
 $("dismissReminder").onclick=()=>$("reminder").classList.remove("show");
 function playPetAction(action){
   const mascot=$("mascot");
-  mascot.className="html-pet "+action;
+  mascot.className="html-pet is-changing";
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{mascot.className="html-pet "+action;}));
   const labels={idle:"发呆中",typing:"敲电脑中",drink:"喝水中",slack:"摸鱼中",eat:"偷吃中",happy:"到账开心",reminder:"该休息啦"};
   $("bubble").textContent=labels[action]||"敲电脑中";
-  if(action!=="typing") setTimeout(()=>{ if(running) mascot.className="html-pet typing"; },2100);
+  if(action!=="typing") setTimeout(()=>{ if(running) playPetAction("typing"); },2100);
 }
+window.playPetAction=playPetAction;
 function showReminder(){
   const items=[
     ["该喝水了","补一杯水，顺手活动一下肩颈。"],
