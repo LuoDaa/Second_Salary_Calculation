@@ -719,6 +719,56 @@ button{border:0}
   .stats{grid-template-columns:1fr}
   .choice-grid{grid-template-columns:1fr}
 }
+@media(max-width:720px){
+  body{background-attachment:fixed}
+  .app{padding:16px 12px 24px}
+  .topbar{gap:12px;margin-bottom:14px}
+  .brand{align-items:flex-start}
+  .mark{width:40px;height:40px;border-radius:13px;font-size:22px;flex:0 0 auto}
+  .title h1{font-size:1.22rem}
+  .title p{max-width:270px;font-size:.78rem;line-height:1.45}
+  .clock{min-width:0;padding:10px 12px;border-radius:14px}
+  .settings{margin-top:18px;padding:18px;border-radius:18px}
+  .input{height:46px;font-size:16px}
+  .choice-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .choice label{min-height:40px;font-size:.8rem}
+  .ticker-grid{display:flex;flex-direction:column;gap:12px}
+  .scene{order:1;min-height:390px;border-radius:18px}
+  .money-panel{order:2;min-height:0;padding:16px;border-radius:18px}
+  .main-mascot{bottom:18px;width:min(285px,82%);height:350px}
+  .monitor{left:23%;bottom:226px;width:118px;height:74px;border-radius:14px}
+  .desk-3d{bottom:46px;width:min(280px,78%);height:82px}
+  .speech{top:44px;font-size:.72rem;transform:translate(8px,8px) scale(.9)}
+  .speech.sh{transform:translate(8px,0) scale(1)}
+  .money{padding:18px 0 14px}
+  .glow{font-size:3.2rem}
+  .amount{min-height:82px;gap:2px}
+  .main-num{font-size:clamp(2.75rem,16vw,4.3rem)}
+  .decimal{font-size:clamp(1.45rem,7vw,2rem)}
+  .currency{font-size:1.35rem}
+  .mills{font-size:.78rem}
+  .moneybag-track{height:46px;padding:17px 52px 0 14px;border-radius:15px}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding-top:16px}
+  .stat{min-height:70px;padding:11px;border-radius:14px}
+  .stat strong{font-size:.9rem}
+  .chrono{gap:8px;margin-top:10px}
+  .timebox{min-height:62px;border-radius:14px}
+  .timebox b{font-size:1.05rem}
+  .reminder-toast{right:12px;bottom:12px;width:calc(100vw - 24px);border-radius:16px}
+}
+@media(max-width:380px){
+  .app{padding-left:10px;padding-right:10px}
+  .choice-grid{grid-template-columns:1fr}
+  .scene{min-height:340px}
+  .main-mascot{width:min(250px,88%);height:310px;bottom:12px}
+  .monitor{display:none}
+  .desk-3d{bottom:36px;width:240px;height:72px}
+  .stats{grid-template-columns:1fr}
+  .main-num{font-size:2.55rem}
+  .decimal{font-size:1.35rem}
+  .moneybag{right:8px;transform:scale(.9)}
+  .moneybag-track{padding-right:46px}
+}
 </style>
 </head>
 <body>
