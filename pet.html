@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>打工牛桌宠</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800;900&family=JetBrains+Mono:wght@600;800&display=swap");
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#090d14;--panel:#111924;--line:rgba(255,255,255,.13);--text:#f6f8ff;--muted:#95a3b7;--green:#7ef8c4;--gold:#ffca5f;--red:#ff6674}
+html,body{width:100%;height:100%;overflow:hidden}
+body{
+  color:var(--text);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:radial-gradient(circle at 50% 0,rgba(126,248,196,.18),transparent 34%),linear-gradient(180deg,#111823,#070a10);
+  user-select:none;
+}
+.pet{
+  width:100vw;
+  height:100vh;
+  display:grid;
+  grid-template-rows:36px 1fr auto;
+  border:1px solid var(--line);
+  border-radius:20px;
+  overflow:hidden;
+  background:linear-gradient(180deg,rgba(17,25,36,.94),rgba(7,10,16,.96));
+}
+.bar{display:flex;align-items:center;justify-content:space-between;padding:8px 10px 0 14px;color:var(--muted);font-size:12px;font-weight:800}
+.bar b{color:var(--text)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 18px var(--green)}
+.scene{position:relative;overflow:hidden}
+.scene::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(to bottom,transparent,black 18%,transparent 94%)}
+.bubble{position:absolute;right:22px;top:14px;padding:7px 10px;border-radius:999px;background:linear-gradient(135deg,var(--green),#fff0a4);color:#07110d;font-size:12px;font-weight:900;box-shadow:0 14px 30px rgba(0,0,0,.28)}
+.desk-line{position:absolute;left:22px;right:22px;bottom:12px;height:58px;border:1px solid rgba(126,248,196,.16);border-radius:50%;transform:rotateX(72deg);background:radial-gradient(ellipse at center,rgba(126,248,196,.12),transparent 68%)}
+.calf-person{position:absolute;left:50%;bottom:-4px;width:230px;height:286px;transform:translateX(-50%);animation:floaty 2.8s ease-in-out infinite;filter:drop-shadow(0 22px 26px rgba(0,0,0,.38))}
+.calf-person img{width:100%;height:100%;object-fit:contain;display:block;transform-origin:50% 88%}
+.calf-person.work img{animation:workBob .42s ease-in-out infinite alternate}
+.calf-person.happy{animation:happyJump .7s ease-in-out 2}.calf-person.sleepy img{filter:saturate(.86) brightness(.92)}
+@keyframes floaty{0%,100%{transform:translateX(-50%) translateY(0) rotate(-1deg)}50%{transform:translateX(-50%) translateY(-7px) rotate(1deg)}}
+@keyframes happyJump{0%,100%{transform:translateX(-50%) translateY(0)}45%{transform:translateX(-50%) translateY(-18px) scale(1.03)}}
+@keyframes workBob{to{transform:translateY(3px) rotate(.8deg) scaleY(.995)}}
+.coin-pop{position:absolute;left:38px;top:24px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#fff2a3,var(--gold));color:#744908;font-size:14px;font-weight:900;animation:coinPop 2.1s ease-in-out infinite;box-shadow:0 10px 22px rgba(255,202,95,.24)}
+@keyframes coinPop{0%,100%{transform:translateY(0) rotateY(0);opacity:.9}50%{transform:translateY(-14px) rotateY(180deg);opacity:1}}
+.money{padding:10px 14px 14px;border-top:1px solid var(--line);background:rgba(255,255,255,.035)}
+.amount{display:flex;align-items:baseline;justify-content:center;gap:2px;font-family:"JetBrains Mono",monospace}
+.amount .cur{font-size:20px;color:var(--green);font-weight:900}
+.amount .num{font-size:42px;font-weight:900;line-height:1}
+.amount .dec{font-size:22px;color:var(--green);font-weight:900}
+.meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px;color:var(--muted);font-size:12px}
+.meta b{color:var(--green);font-family:"JetBrains Mono",monospace}
+.track{height:8px;margin-top:9px;border-radius:999px;background:rgba(255,255,255,.09);overflow:hidden}
+.fill{height:100%;width:0%;border-radius:inherit;background:linear-gradient(90deg,#61d8ff,var(--green),var(--gold))}
+.settings{position:absolute;inset:44px 14px auto;z-index:5;padding:14px;border:1px solid var(--line);border-radius:16px;background:rgba(12,18,27,.96);box-shadow:0 20px 60px rgba(0,0,0,.42)}
+.settings.hidden{display:none}
+.settings label{display:block;margin:9px 0 5px;color:var(--muted);font-size:12px;font-weight:800}
+.settings input,.settings select{width:100%;height:36px;padding:0 10px;border:1px solid var(--line);border-radius:10px;outline:0;background:rgba(255,255,255,.07);color:var(--text);font-family:"JetBrains Mono",monospace;font-weight:800}
+.settings button{width:100%;height:38px;margin-top:12px;border:0;border-radius:12px;background:linear-gradient(135deg,var(--green),var(--gold));color:#06110d;font-weight:900;cursor:pointer}
+.mini-btn{border:0;border-radius:10px;padding:6px 9px;background:rgba(255,255,255,.08);color:var(--text);font-weight:900;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="pet">
+  <div class="bar"><span><span class="dot"></span> <b>打工牛</b></span><button class="mini-btn" id="configBtn">设置</button></div>
+  <div class="scene">
+    <div class="desk-line"></div>
+    <div class="coin-pop">¥</div>
+    <div class="calf-person work" id="mascot" aria-label="动漫小牛人桌宠">
+      <img src="./assets/calf-person.png" alt="">
+    </div>
+    <div class="bubble" id="bubble">搬砖中</div>
+    <div class="settings hidden" id="settings">
+      <label>月薪</label><input id="salary" type="number" min="0" step="100">
+      <label>上班时间</label><input id="startTime" type="time" value="09:00">
+      <label>下班时间</label><input id="endTime" type="time" value="18:00">
+      <label>休息制度</label><select id="rest"><option value="double">双休</option><option value="single">单休</option><option value="none">无休</option></select>
+      <button id="saveBtn">开始常驻</button>
+    </div>
+  </div>
+  <div class="money">
+    <div class="amount"><span class="cur">¥</span><span class="num" id="moneyInt">0</span><span class="dec" id="moneyDec">.00</span></div>
+    <div class="meta"><span id="status">未开始</span><span>每秒 <b id="rate">0.000000</b></span></div>
+    <div class="track"><div class="fill" id="fill"></div></div>
+  </div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const defaults={salary:"",startTime:"09:00",endTime:"18:00",rest:"double"};
+let cfg={...defaults,...JSON.parse(localStorage.getItem("salaryPetConfig")||"{}")};
+let running=false;
+function loadForm(){ $("salary").value=cfg.salary||""; $("startTime").value=cfg.startTime; $("endTime").value=cfg.endTime; $("rest").value=cfg.rest; }
+function days(){ return cfg.rest==="double"?22:cfg.rest==="single"?26:30; }
+function min(v){ const [h,m]=v.split(":").map(Number); return h*60+m; }
+function calc(){
+  const salary=Number(cfg.salary)||0,start=min(cfg.startTime);let end=min(cfg.endTime);if(end<=start)end+=1440;
+  const workMin=end-start,d=days();return{salary,start,end,workMin,d,perSecond:salary/d/workMin/60};
+}
+function elapsed(c){
+  const n=new Date();let s=n.getHours()*3600+n.getMinutes()*60+n.getSeconds();const st=c.start*60;let en=c.end*60;if(en<=st)en+=86400;if(c.end>1440&&s<st)s+=86400;if(s<st)return 0;if(s>=en)return en-st;return s-st;
+}
+function tick(){
+  if(!running)return;
+  const c=calc(),e=elapsed(c),earned=e*c.perSecond,progress=Math.min(100,e/(c.workMin*60)*100);
+  const fixed=earned.toFixed(2),parts=fixed.split(".");
+  $("moneyInt").textContent=Number(parts[0]).toLocaleString("zh-CN");$("moneyDec").textContent="."+parts[1];
+  $("rate").textContent=c.perSecond.toFixed(6);$("fill").style.width=progress+"%";$("status").textContent=progress>=100?"下班啦":"搬砖中";
+}
+$("configBtn").onclick=()=>$("settings").classList.toggle("hidden");
+$("saveBtn").onclick=()=>{cfg={salary:$("salary").value,startTime:$("startTime").value,endTime:$("endTime").value,rest:$("rest").value};localStorage.setItem("salaryPetConfig",JSON.stringify(cfg));running=Number(cfg.salary)>0;$("settings").classList.add("hidden");tick();};
+const qs=new URLSearchParams(location.search);
+if(qs.get("demo")==="1"){
+  cfg={salary:qs.get("salary")||"20000",startTime:"09:00",endTime:"18:00",rest:"double"};
+}
+loadForm(); if(Number(cfg.salary)>0){running=true}else{$("settings").classList.remove("hidden")} setInterval(tick,250); tick();
+</script>
+<script>
+setInterval(()=>{
+  if(!running)return;
+  const mascot=$("mascot");
+  const moods=["work","happy","sleepy"];
+  mascot.className="calf-person "+moods[Math.random()*moods.length|0];
+  $("bubble").textContent=["+¥0.01","摸鱼中","搬砖中","快下班","老板看不见"][Math.random()*5|0];
+  setTimeout(()=>{if(running)mascot.className="calf-person work"},1800);
+},3600);
+</script>
+</body>
+</html>
