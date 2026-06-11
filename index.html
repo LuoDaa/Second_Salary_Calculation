@@ -623,6 +623,25 @@ button{border:0}
   pointer-events:none;
   overflow:hidden;
 }
+.reminder-toast{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  z-index:20;
+  display:none;
+  width:min(330px,calc(100vw - 28px));
+  padding:14px 16px;
+  border:1px solid rgba(126,248,196,.32);
+  border-radius:18px;
+  color:#07110d;
+  background:linear-gradient(135deg,var(--green-2),#fff0a4);
+  box-shadow:0 24px 70px rgba(0,0,0,.38);
+}
+.reminder-toast.show{display:block;animation:toastIn .25s ease-out}
+.reminder-toast b{display:block;margin-bottom:4px;font-size:.95rem;font-weight:900}
+.reminder-toast span{font-size:.82rem;font-weight:800}
+.reminder-toast button{position:absolute;right:9px;top:8px;border:0;border-radius:9px;background:rgba(0,0,0,.12);padding:3px 8px;color:#07110d;font-weight:900;cursor:pointer}
+@keyframes toastIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
 .particle{
   position:absolute;
   color:var(--amber);
@@ -664,6 +683,7 @@ button{border:0}
 </head>
 <body>
 <div class="particles" id="particles"></div>
+<div class="reminder-toast" id="reminderToast"><button onclick="dismissReminder()">×</button><b id="reminderTitle">该喝水了</b><span id="reminderText">站起来活动一下，眼睛休息 2 分钟。</span></div>
 <main class="app">
   <header class="topbar">
     <div class="brand">
@@ -950,6 +970,7 @@ let particleTimer;
 let config={};
 let lastMoney="";
 let actionTick=0;
+let lastReminder=Number(localStorage.getItem("salaryTickerLastReminder")||0);
 
 const moneyBits=["+¥0.01","+¥0.08","+¥0.18","+¥0.66"];
 const cowActions=["drk","str","wve"];
@@ -1097,6 +1118,37 @@ function updateTicker(){
 
   if(Math.random()<.18) createParticle();
   cowAnimate();
+  checkReminder();
+}
+
+function dismissReminder(){
+  document.getElementById("reminderToast").classList.remove("show");
+}
+
+function showReminder(){
+  const items=[
+    ["该喝水了","补一杯水，顺手活动一下肩颈。"],
+    ["眼睛休息","看远处 20 秒，别一直盯屏幕。"],
+    ["起来走走","站起来走两步，腰背会感谢你。"],
+    ["休息一下","休息 2 分钟，再继续搬砖。"]
+  ];
+  const item=items[Math.random()*items.length|0];
+  document.getElementById("reminderTitle").textContent=item[0];
+  document.getElementById("reminderText").textContent=item[1];
+  document.getElementById("reminderToast").classList.add("show");
+  showSpeech(item[0]);
+  if("Notification" in window && Notification.permission==="granted") new Notification(item[0],{body:item[1]});
+  if("Notification" in window && Notification.permission==="default") Notification.requestPermission();
+}
+
+function checkReminder(){
+  const now=Date.now();
+  const interval=60*60*1000;
+  if(now-lastReminder>=interval){
+    lastReminder=now;
+    localStorage.setItem("salaryTickerLastReminder",String(now));
+    showReminder();
+  }
 }
 
 function toggleTicker(){

@@ -56,6 +56,10 @@ body{
 .settings input,.settings select{width:100%;height:36px;padding:0 10px;border:1px solid var(--line);border-radius:10px;outline:0;background:rgba(255,255,255,.07);color:var(--text);font-family:"JetBrains Mono",monospace;font-weight:800}
 .settings button{width:100%;height:38px;margin-top:12px;border:0;border-radius:12px;background:linear-gradient(135deg,var(--green),var(--gold));color:#06110d;font-weight:900;cursor:pointer}
 .mini-btn{border:0;border-radius:10px;padding:6px 9px;background:rgba(255,255,255,.08);color:var(--text);font-weight:900;cursor:pointer}
+.reminder{position:absolute;left:14px;right:14px;top:44px;z-index:9;display:none;padding:12px 13px;border:1px solid rgba(126,248,196,.35);border-radius:15px;background:linear-gradient(135deg,rgba(126,248,196,.94),rgba(255,240,164,.94));color:#07110d;box-shadow:0 18px 44px rgba(0,0,0,.35)}
+.reminder.show{display:block;animation:noticeIn .28s ease-out}
+.reminder b{display:block;font-size:14px;margin-bottom:3px}.reminder span{font-size:12px;font-weight:800}.reminder button{position:absolute;right:8px;top:8px;border:0;border-radius:8px;background:rgba(0,0,0,.12);padding:3px 7px;font-weight:900;cursor:pointer}
+@keyframes noticeIn{from{opacity:0;transform:translateY(-10px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
 </style>
 </head>
 <body>
@@ -73,8 +77,10 @@ body{
       <label>上班时间</label><input id="startTime" type="time" value="09:00">
       <label>下班时间</label><input id="endTime" type="time" value="18:00">
       <label>休息制度</label><select id="rest"><option value="double">双休</option><option value="single">单休</option><option value="none">无休</option></select>
+      <label>提醒间隔（分钟）</label><input id="remindMinutes" type="number" min="10" step="5" value="60">
       <button id="saveBtn">开始常驻</button>
     </div>
+    <div class="reminder" id="reminder"><button id="dismissReminder">×</button><b id="reminderTitle">该喝水了</b><span id="reminderText">站起来活动一下，眼睛休息 2 分钟。</span></div>
   </div>
   <div class="money">
     <div class="amount"><span class="cur">¥</span><span class="num" id="moneyInt">0</span><span class="dec" id="moneyDec">.00</span></div>
@@ -84,10 +90,10 @@ body{
 </div>
 <script>
 const $=id=>document.getElementById(id);
-const defaults={salary:"",startTime:"09:00",endTime:"18:00",rest:"double"};
+const defaults={salary:"",startTime:"09:00",endTime:"18:00",rest:"double",remindMinutes:"60",lastReminder:"0"};
 let cfg={...defaults,...JSON.parse(localStorage.getItem("salaryPetConfig")||"{}")};
 let running=false;
-function loadForm(){ $("salary").value=cfg.salary||""; $("startTime").value=cfg.startTime; $("endTime").value=cfg.endTime; $("rest").value=cfg.rest; }
+function loadForm(){ $("salary").value=cfg.salary||""; $("startTime").value=cfg.startTime; $("endTime").value=cfg.endTime; $("rest").value=cfg.rest; $("remindMinutes").value=cfg.remindMinutes||"60"; }
 function days(){ return cfg.rest==="double"?22:cfg.rest==="single"?26:30; }
 function min(v){ const [h,m]=v.split(":").map(Number); return h*60+m; }
 function calc(){
@@ -103,12 +109,37 @@ function tick(){
   const fixed=earned.toFixed(2),parts=fixed.split(".");
   $("moneyInt").textContent=Number(parts[0]).toLocaleString("zh-CN");$("moneyDec").textContent="."+parts[1];
   $("rate").textContent=c.perSecond.toFixed(6);$("fill").style.width=progress+"%";$("status").textContent=progress>=100?"下班啦":"搬砖中";
+  checkReminder();
 }
 $("configBtn").onclick=()=>$("settings").classList.toggle("hidden");
-$("saveBtn").onclick=()=>{cfg={salary:$("salary").value,startTime:$("startTime").value,endTime:$("endTime").value,rest:$("rest").value};localStorage.setItem("salaryPetConfig",JSON.stringify(cfg));running=Number(cfg.salary)>0;$("settings").classList.add("hidden");tick();};
+$("saveBtn").onclick=()=>{cfg={...cfg,salary:$("salary").value,startTime:$("startTime").value,endTime:$("endTime").value,rest:$("rest").value,remindMinutes:$("remindMinutes").value||"60"};localStorage.setItem("salaryPetConfig",JSON.stringify(cfg));running=Number(cfg.salary)>0;$("settings").classList.add("hidden");tick();};
+$("dismissReminder").onclick=()=>$("reminder").classList.remove("show");
+function showReminder(){
+  const items=[
+    ["该喝水了","补一杯水，顺手活动一下肩颈。"],
+    ["眼睛休息","看远处 20 秒，别一直盯屏幕。"],
+    ["起来走走","站起来走两步，腰背会感谢你。"],
+    ["摸鱼许可","休息 2 分钟，再继续搬砖。"]
+  ];
+  const item=items[Math.random()*items.length|0];
+  $("reminderTitle").textContent=item[0];$("reminderText").textContent=item[1];$("reminder").classList.add("show");
+  $("bubble").textContent=item[0];
+  if("Notification" in window && Notification.permission==="granted") new Notification(item[0],{body:item[1]});
+  if("Notification" in window && Notification.permission==="default") Notification.requestPermission();
+}
+function checkReminder(){
+  const interval=Math.max(10,Number(cfg.remindMinutes)||60)*60*1000;
+  const last=Number(cfg.lastReminder)||0;
+  const now=Date.now();
+  if(now-last>=interval){
+    cfg.lastReminder=String(now);
+    localStorage.setItem("salaryPetConfig",JSON.stringify(cfg));
+    showReminder();
+  }
+}
 const qs=new URLSearchParams(location.search);
 if(qs.get("demo")==="1"){
-  cfg={salary:qs.get("salary")||"20000",startTime:"09:00",endTime:"18:00",rest:"double"};
+  cfg={...cfg,salary:qs.get("salary")||"20000",startTime:"09:00",endTime:"18:00",rest:"double"};
 }
 loadForm(); if(Number(cfg.salary)>0){running=true}else{$("settings").classList.remove("hidden")} setInterval(tick,250); tick();
 </script>
