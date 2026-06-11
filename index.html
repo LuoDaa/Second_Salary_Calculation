@@ -282,7 +282,7 @@ button{border:0}
   animation:coinFloat 6.5s ease-in-out infinite;
   z-index:1;
 }
-.coin::after{content:"¥";display:grid;place-items:center;height:100%;color:#69420d;font-weight:900}
+.coin::after{content:"楼";display:grid;place-items:center;height:100%;color:#69420d;font-weight:900}
 .coin.c1{top:92px;left:11%;animation-delay:-1.5s}
 .coin.c2{top:120px;right:12%;transform:scale(.78);animation-delay:-3.8s}
 .coin.c3{top:40px;right:28%;transform:scale(.62);animation-delay:-.5s}
@@ -377,11 +377,29 @@ button{border:0}
 }
 .main-mascot img,.main-mascot canvas{width:100%;height:100%;object-fit:contain;display:block}
 .main-mascot canvas{display:none}
-.main-mascot.rive img{display:none}
-.main-mascot.rive canvas{display:block}
 .main-mascot.typing img{animation:mainMascotWork .42s ease-in-out infinite alternate}
 .main-mascot.happy{animation:mainMascotHappy .7s ease-in-out 2}
 .main-mascot.slack img{filter:saturate(.88) brightness(.94)}
+.main-mascot.html-calf{height:430px;animation:none}
+.main-mascot.html-calf img,.main-mascot.html-calf canvas{display:none}
+.main-mascot.html-calf svg{width:100%;height:100%;overflow:visible}
+.main-mascot .body-core,.main-mascot .head-group,.main-mascot .pet-ear,.main-mascot .pet-horn,.main-mascot .pet-arm,.main-mascot .pet-leg,.main-mascot .tail,.main-mascot .pet-prop{transform-box:fill-box;transform-origin:center}
+.main-mascot .body-core{animation:calfBreath 2.6s ease-in-out infinite}
+.main-mascot .head-group{animation:calfHeadIdle 2.8s ease-in-out infinite;transform-origin:120px 86px}
+.main-mascot .ear-left{animation:calfEar 3.8s ease-in-out infinite;transform-origin:82px 70px}.main-mascot .ear-right{animation:calfEar 4.2s ease-in-out infinite reverse;transform-origin:158px 70px}
+.main-mascot .tail{animation:calfTail 1.8s ease-in-out infinite;transform-origin:172px 166px}
+.main-mascot .arm-left{transform-origin:86px 145px}.main-mascot .arm-right{transform-origin:154px 145px}
+.main-mascot .eye{transform-origin:center;animation:calfBlink 5.5s steps(1,end) infinite}
+.main-mascot .prop-cup,.main-mascot .prop-snack,.main-mascot .prop-phone,.main-mascot .notice-mark{opacity:0;transform-box:fill-box;transform-origin:center}
+.main-mascot .screen-lines{animation:calfScreen 1.4s linear infinite}
+.main-mascot.typing .arm-left{animation:calfTypeLeft .34s ease-in-out infinite alternate}.main-mascot.typing .arm-right{animation:calfTypeRight .31s ease-in-out infinite alternate}
+.main-mascot.typing .head-group{animation:calfHeadType .9s ease-in-out infinite}.main-mascot.typing .body-core{animation:calfWorkBounce .7s ease-in-out infinite}
+.main-mascot.drink .prop-cup{opacity:1;animation:calfCup 1.8s ease-in-out infinite}.main-mascot.drink .arm-right{animation:calfDrinkArm 1.8s ease-in-out infinite}.main-mascot.drink .head-group{animation:calfDrinkHead 1.8s ease-in-out infinite}
+.main-mascot.slack .prop-phone{opacity:1;animation:calfPhone 1.4s ease-in-out infinite}.main-mascot.slack .head-group{animation:calfSlackHead 2s ease-in-out infinite}.main-mascot.slack .arm-left{animation:calfSlackArm 1.4s ease-in-out infinite}
+.main-mascot.eat .prop-snack{opacity:1;animation:calfSnack 1.55s ease-in-out infinite}.main-mascot.eat .arm-left{animation:calfEatArm 1.55s ease-in-out infinite}.main-mascot.eat .head-group{animation:calfEatHead 1.55s ease-in-out infinite}
+.main-mascot.happy .body-core,.main-mascot.reminder .body-core{animation:calfHappyHop .72s ease-in-out infinite}.main-mascot.happy .arm-left,.main-mascot.reminder .arm-left{animation:calfWaveLeft .62s ease-in-out infinite}.main-mascot.happy .arm-right,.main-mascot.reminder .arm-right{animation:calfWaveRight .62s ease-in-out infinite}
+.main-mascot.reminder .notice-mark{opacity:1;animation:calfNotice .8s ease-in-out infinite}
+@keyframes calfBreath{50%{transform:translateY(-3px) scaleY(1.015)}}@keyframes calfWorkBounce{50%{transform:translateY(3px) scaleY(.992)}}@keyframes calfHeadIdle{50%{transform:rotate(2deg) translateY(-3px)}}@keyframes calfHeadType{50%{transform:rotate(-2deg) translateY(2px)}}@keyframes calfEar{0%,85%,100%{transform:rotate(0)}90%{transform:rotate(12deg)}}@keyframes calfTail{50%{transform:rotate(18deg)}}@keyframes calfBlink{0%,92%,100%{transform:scaleY(1)}94%{transform:scaleY(.08)}}@keyframes calfTypeLeft{to{transform:rotate(9deg) translate(2px,5px)}}@keyframes calfTypeRight{to{transform:rotate(-10deg) translate(-2px,5px)}}@keyframes calfScreen{to{transform:translateY(8px)}}@keyframes calfCup{0%,100%{transform:translate(0,0) rotate(0)}45%,70%{transform:translate(-15px,-34px) rotate(-18deg)}}@keyframes calfDrinkArm{0%,100%{transform:rotate(0)}45%,70%{transform:rotate(-42deg) translate(-6px,-8px)}}@keyframes calfDrinkHead{45%,70%{transform:rotate(8deg) translateY(2px)}}@keyframes calfPhone{50%{transform:translateY(-5px) rotate(6deg)}}@keyframes calfSlackHead{50%{transform:rotate(-8deg) translateY(3px)}}@keyframes calfSlackArm{50%{transform:rotate(20deg) translate(8px,2px)}}@keyframes calfSnack{0%,100%{transform:translate(0,0) rotate(0)}45%,72%{transform:translate(25px,-38px) rotate(16deg)}}@keyframes calfEatArm{45%,72%{transform:rotate(38deg) translate(8px,-4px)}}@keyframes calfEatHead{45%,72%{transform:rotate(-6deg) translateY(3px)}}@keyframes calfHappyHop{50%{transform:translateY(-10px) scale(1.02)}}@keyframes calfWaveLeft{50%{transform:rotate(-34deg) translate(-3px,-7px)}}@keyframes calfWaveRight{50%{transform:rotate(34deg) translate(3px,-7px)}}@keyframes calfNotice{50%{transform:scale(1.16);opacity:.6}}
 @keyframes mainMascotFloat{0%,100%{transform:translateX(-50%) translateY(0) rotate(-1deg)}50%{transform:translateX(-50%) translateY(-8px) rotate(1deg)}}
 @keyframes mainMascotWork{to{transform:translateY(3px) rotate(.8deg) scaleY(.995)}}
 @keyframes mainMascotHappy{0%,100%{transform:translateX(-50%) translateY(0)}45%{transform:translateX(-50%) translateY(-22px) scale(1.035)}}
@@ -557,7 +575,7 @@ button{border:0}
   background:linear-gradient(#fff1b0,#ffcc63);
 }
 .moneybag::after{
-  content:"¥";
+  content:"楼";
   position:absolute;
   left:4px;
   right:4px;
@@ -707,567 +725,39 @@ button{border:0}
 <div class="particles" id="particles"></div>
 <div class="reminder-toast" id="reminderToast"><button onclick="dismissReminder()">×</button><b id="reminderTitle">该喝水了</b><span id="reminderText">站起来活动一下，眼睛休息 2 分钟。</span></div>
 <main class="app">
-  <header class="topbar">
-    <div class="brand">
-      <div class="mark">牛</div>
-      <div class="title">
-        <h1>打工牛 · 实时工资</h1>
-        <p>盯住每一秒现金流，工作日自动计算。</p>
-      </div>
-    </div>
-    <div class="clock">
-      <b id="clockTime">--:--:--</b>
-      <span id="clockDate">Today</span>
-    </div>
-  </header>
-
+  <header class="topbar"><div class="brand"><div class="mark">牛</div><div class="title"><h1>打工牛 · 实时工资</h1><p>盯住每一秒现金流，工作日自动计算。</p></div></div><div class="clock"><b id="clockTime">--:--:--</b><span id="clockDate">Today</span></div></header>
   <section class="layout">
     <form class="panel settings" id="settingsPanel" onsubmit="event.preventDefault();toggleTicker();">
       <div class="section-label">薪资参数</div>
-      <div class="field">
-        <label for="salary">月薪 <span class="hint">人民币 / 月</span></label>
-        <input class="input" id="salary" type="number" min="0" step="100" autocomplete="off">
-      </div>
-      <div class="field">
-        <label for="startTime">上班时间</label>
-        <input class="input" id="startTime" type="time" value="09:00">
-      </div>
-      <div class="field">
-        <label for="endTime">下班时间</label>
-        <input class="input" id="endTime" type="time" value="18:00">
-      </div>
-      <div class="field">
-        <label>休息制度</label>
-        <div class="choice-grid">
-          <div class="choice"><input type="radio" name="restDay" id="restDouble" value="double" checked><label for="restDouble">双休</label></div>
-          <div class="choice"><input type="radio" name="restDay" id="restSingle" value="single"><label for="restSingle">单休</label></div>
-          <div class="choice"><input type="radio" name="restDay" id="restNone" value="none"><label for="restNone">无休</label></div>
-        </div>
-      </div>
+      <div class="field"><label for="salary">月薪 <span class="hint">人民币 / 月</span></label><input class="input" id="salary" type="number" min="0" step="100" autocomplete="off"></div>
+      <div class="field"><label for="startTime">上班时间</label><input class="input" id="startTime" type="time" value="09:00"></div>
+      <div class="field"><label for="endTime">下班时间</label><input class="input" id="endTime" type="time" value="18:00"></div>
+      <div class="field"><label>休息制度</label><div class="choice-grid"><div class="choice"><input type="radio" name="restDay" id="restDouble" value="double" checked><label for="restDouble">双休</label></div><div class="choice"><input type="radio" name="restDay" id="restSingle" value="single"><label for="restSingle">单休</label></div><div class="choice"><input type="radio" name="restDay" id="restNone" value="none"><label for="restNone">无休</label></div></div></div>
       <button class="cta" type="submit">开始赚钱</button>
     </form>
-
-    <section class="ticker" id="tickerPanel">
-      <div class="ticker-grid">
-        <div class="scene" aria-label="3D 打工牛动画">
-          <div class="city"></div>
-          <div class="coin c1"></div>
-          <div class="coin c2"></div>
-          <div class="coin c3"></div>
-          <div class="floor"></div>
-          <div class="monitor"></div>
-          <div class="desk-3d"></div>
-          <canvas class="cow-canvas" id="cowCanvas"></canvas>
-          <div class="main-mascot typing" id="mainMascot">
-            <canvas id="mainRiveMascot" width="500" height="600"></canvas>
-            <img src="./assets/calf-person.png" alt="">
-          </div>
-          <div class="speech" id="speech">+¥0.01</div>
-        </div>
-
-        <div class="panel money-panel">
-          <div class="money-head">
-            <div class="section-label" style="margin:0">今日收益</div>
-            <span class="badge" id="statusBadge">计算中</span>
-          </div>
-
-          <div class="money">
-            <div class="glow" id="moneyGlow">¥0</div>
-            <div class="amount">
-              <span class="currency">¥</span>
-              <span class="main-num" id="moneyInt">0</span>
-              <span class="decimal" id="moneyDec">.00</span>
-              <span class="mills" id="moneyMil">00</span>
-            </div>
-          </div>
-          <div class="rate">每秒 <b id="perSecond">0.000000</b> 元</div>
-
-          <div class="progress">
-            <div class="progress-row"><span>上班进度</span><b id="progressText">0%</b></div>
-            <div class="moneybag-track" aria-label="钱袋子进度条">
-              <div class="coin-stack"><i></i><i></i><i></i></div>
-              <div class="bag-rail"><div class="fill" id="progressFill"></div></div>
-              <div class="moneybag"></div>
-            </div>
-          </div>
-
-          <div class="stats">
-            <div class="stat"><strong id="perMinute">¥0.00</strong><span>每分钟</span></div>
-            <div class="stat"><strong id="perHour">¥0.00</strong><span>每小时</span></div>
-            <div class="stat"><strong id="todayTotal">¥0.00</strong><span>今日总额</span></div>
-            <div class="stat"><strong id="monthSalary">¥0</strong><span>月薪</span></div>
-          </div>
-
-          <div class="chrono">
-            <div class="timebox"><b id="elapsedHour">0</b><span>小时</span></div>
-            <div class="timebox"><b id="elapsedMinute">0</b><span>分钟</span></div>
-            <div class="timebox"><b id="elapsedSecond">0</b><span>秒</span></div>
-          </div>
-
-          <div class="stop-wrap"><button class="cta stop" onclick="toggleTicker()">停止</button></div>
-        </div>
-      </div>
-    </section>
+    <section class="ticker" id="tickerPanel"><div class="ticker-grid"><div class="scene"><div class="city"></div><div class="coin c1"></div><div class="coin c2"></div><div class="coin c3"></div><div class="floor"></div><div class="monitor"></div><div class="desk-3d"></div><div class="main-mascot typing" id="mainMascot"></div><div class="speech" id="speech">+¥0.01</div></div><div class="panel money-panel"><div class="money-head"><div class="section-label" style="margin:0">今日收益</div><span class="badge" id="statusBadge">计算中</span></div><div class="money"><div class="glow" id="moneyGlow">¥0</div><div class="amount"><span class="currency">¥</span><span class="main-num" id="moneyInt">0</span><span class="decimal" id="moneyDec">.00</span><span class="mills" id="moneyMil">00</span></div></div><div class="rate">每秒 <b id="perSecond">0.000000</b> 元</div><div class="progress"><div class="progress-row"><span>上班进度</span><b id="progressText">0%</b></div><div class="moneybag-track"><div class="coin-stack"><i></i><i></i><i></i></div><div class="bag-rail"><div class="fill" id="progressFill"></div></div><div class="moneybag"></div></div></div><div class="stats"><div class="stat"><strong id="perMinute">¥0.00</strong><span>每分钟</span></div><div class="stat"><strong id="perHour">¥0.00</strong><span>每小时</span></div><div class="stat"><strong id="todayTotal">¥0.00</strong><span>今日总额</span></div><div class="stat"><strong id="monthSalary">¥0</strong><span>月薪</span></div></div><div class="chrono"><div class="timebox"><b id="elapsedHour">0</b><span>小时</span></div><div class="timebox"><b id="elapsedMinute">0</b><span>分钟</span></div><div class="timebox"><b id="elapsedSecond">0</b><span>秒</span></div></div><div class="stop-wrap"><button class="cta stop" onclick="toggleTicker()">停止</button></div></div></div></section>
   </section>
 </main>
-
 <script>
-document.documentElement.dataset.cowScript="boot";
-(async()=>{
-const THREE = await import("./vendor/three.module.js?v=3");
-const { GLTFLoader } = await import("./vendor/GLTFLoader.js?v=3");
-window.__cowModuleStarted=true;
-document.documentElement.dataset.cowScript="module-loaded";
-
-const canvas=document.getElementById("cowCanvas");
-const scene=new THREE.Scene();
-const camera=new THREE.PerspectiveCamera(32,1,.1,100);
-camera.position.set(4.8,1.25,8.6);
-const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
-renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-renderer.setClearColor(0x000000,0);
-renderer.outputColorSpace=THREE.SRGBColorSpace;
-renderer.toneMapping=THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure=1.12;
-
-const stage=new THREE.Group();
-scene.add(stage);
-
-const cowRoot=new THREE.Group();
-cowRoot.position.set(-.05,-.78,.1);
-cowRoot.rotation.set(0,-.68,0);
-stage.add(cowRoot);
-
-const gold=new THREE.MeshPhysicalMaterial({color:0xffc75a,roughness:.24,metalness:.24,clearcoat:.35});
-const glass=new THREE.MeshPhysicalMaterial({color:0x76f3c3,roughness:.2,transparent:true,opacity:.18,clearcoat:.9});
-const floorMat=new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:.24});
-
-const floorShadow=new THREE.Mesh(new THREE.CircleGeometry(1.7,64),floorMat);
-floorShadow.position.set(0,-1.18,.05);
-floorShadow.rotation.x=-Math.PI/2;
-stage.add(floorShadow);
-
-const coinGroup=new THREE.Group();
-stage.add(coinGroup);
-for(const [x,y,z,s] of [[-1.65,.65,.15,.72],[1.65,.9,.0,.58],[.85,1.75,-.15,.5]]) {
-  const c=new THREE.Mesh(new THREE.CylinderGeometry(.22,.22,.055,48),gold);
-  c.position.set(x,y,z);
-  c.scale.setScalar(s);
-  c.rotation.x=Math.PI/2;
-  coinGroup.add(c);
-}
-
-const orbit=new THREE.Mesh(new THREE.TorusGeometry(1.5,.01,10,128),glass);
-orbit.position.set(0,-.18,.05);
-orbit.rotation.x=Math.PI/2;
-stage.add(orbit);
-
-scene.add(new THREE.HemisphereLight(0xdff7ff,0x151821,2.25));
-const key=new THREE.DirectionalLight(0xffffff,2.55);
-key.position.set(3.8,4.5,5.2);
-scene.add(key);
-const rim=new THREE.PointLight(0x61d8ff,1.65,9);
-rim.position.set(-3.2,1.6,2.8);
-scene.add(rim);
-const warm=new THREE.PointLight(0xffbe55,1.25,7);
-warm.position.set(2.4,2.4,2.1);
-scene.add(warm);
-
-let cowModel=null;
-let cowMixer=null;
-let clipActions={};
-let currentClip=null;
-let modelReady=false;
-window.__cowModelReady=false;
-window.__cowLoadStatus={state:"starting"};
-
-const cowLoader=new GLTFLoader();
-cowLoader.load(
-  "./vendor/Cow.gltf?v=2",
-  (gltf)=>{
-    cowModel=gltf.scene;
-    const box=new THREE.Box3().setFromObject(cowModel);
-    const size=box.getSize(new THREE.Vector3());
-    const center=box.getCenter(new THREE.Vector3());
-    cowModel.position.sub(center);
-    const scale=2.35/Math.max(size.x,size.y,size.z);
-    cowModel.scale.setScalar(scale);
-    cowModel.traverse((node)=>{
-      if(node.isMesh){
-        node.castShadow=false;
-        node.receiveShadow=false;
-        if(node.material){
-          node.material.roughness=Math.min(node.material.roughness ?? .5,.62);
-          node.material.needsUpdate=true;
-        }
-      }
-    });
-    cowRoot.add(cowModel);
-    if(gltf.animations.length){
-      cowMixer=new THREE.AnimationMixer(cowModel);
-      clipActions=Object.fromEntries(gltf.animations.map((clip)=>[clip.name,cowMixer.clipAction(clip)]));
-      playCowClip("Idle", .18);
-    }
-    modelReady=true;
-    window.__cowModelReady=true;
-    window.__cowLoadStatus={state:"ready",animations:gltf.animations.length};
-    document.documentElement.dataset.cowScript="model-ready";
-  },
-  (event)=>{
-    window.__cowLoadStatus={
-      state:"loading",
-      loaded:event.loaded||0,
-      total:event.total||0
-    };
-  },
-  (error)=>{
-    window.__cowLoadStatus={state:"error",message:String(error && (error.message || error))};
-    console.error("Cow model failed to load", error);
-  }
-);
-
-let activeAction="";
-let actionUntil=0;
-function playCowClip(name, fade=.12){
-  const next=clipActions[name] || clipActions.Idle;
-  if(!next || next===currentClip) return;
-  next.reset().fadeIn(fade).play();
-  if(currentClip) currentClip.fadeOut(fade);
-  currentClip=next;
-}
-window.cow3DAction=(action)=>{
-  activeAction=action;
-  actionUntil=performance.now()+1900;
-  if(action==="drk") playCowClip("Eating");
-  if(action==="str") playCowClip("Idle_Headlow");
-  if(action==="wve") playCowClip("Walk");
-};
-
-function resize(){
-  const rect=canvas.getBoundingClientRect();
-  const width=Math.max(1,Math.floor(rect.width));
-  const height=Math.max(1,Math.floor(rect.height));
-  renderer.setSize(width,height,false);
-  camera.aspect=width/height;
-  camera.updateProjectionMatrix();
-  camera.lookAt(0,-.32,0);
-}
-window.addEventListener("resize",resize);
-new ResizeObserver(resize).observe(canvas.parentElement);
-window.resizeCow3D=resize;
-resize();
-
-function animate(now){
-  const t=now/1000;
-  if(now>actionUntil){
-    activeAction="";
-    playCowClip("Idle", .22);
-  }
-  cowRoot.position.y=-.78+Math.sin(t*2.1)*.035;
-  cowRoot.rotation.y=-.68+Math.sin(t*.65)*.13;
-  cowRoot.rotation.z=Math.sin(t*1.35)*.015;
-  cowRoot.scale.setScalar(1);
-
-  if(activeAction==="drk") cowRoot.rotation.z=.08+Math.sin(t*8)*.035;
-  if(activeAction==="str") cowRoot.scale.set(1,1.045,1);
-  if(activeAction==="wve") cowRoot.rotation.y=-.68+Math.sin(t*12)*.18;
-
-  coinGroup.children.forEach((coin,index)=>{
-    coin.rotation.z=t*(1.7+index*.35);
-    coin.position.y=[.65,.9,1.75][index]+Math.sin(t*2.2+index)*.06;
-  });
-  orbit.rotation.z=t*.22;
-  if(cowMixer) cowMixer.update(.016);
-  renderer.render(scene,camera);
-  requestAnimationFrame(animate);
-}
-requestAnimationFrame(animate);
-})().catch((error)=>{
-  window.__cowLoadStatus={state:"module-error",message:String(error && (error.message || error))};
-  document.documentElement.dataset.cowScript="module-error";
-  console.error("3D scene failed", error);
-});
-</script>
-
-<script>
-let isRunning=false;
-let timerId;
-let particleTimer;
-let config={};
-let lastMoney="";
-let actionTick=0;
-let lastReminder=Number(localStorage.getItem("salaryTickerLastReminder")||0);
-
-const moneyBits=["+¥0.01","+¥0.08","+¥0.18","+¥0.66"];
-const cowActions=["drk","str","wve"];
-const cowMessages=["继续搬砖","+¥0.01","摸鱼暂停","咖啡续命","绩效到账","快下班了","老板看不见"];
-
-function yuan(value, digits=2){
-  return "¥"+Number(value||0).toLocaleString("zh-CN",{minimumFractionDigits:digits,maximumFractionDigits:digits});
-}
-
-function updateClock(){
-  const now=new Date();
-  document.getElementById("clockTime").textContent=now.toLocaleTimeString("zh-CN",{hour12:false});
-  document.getElementById("clockDate").textContent=now.toLocaleDateString("zh-CN",{weekday:"long",month:"2-digit",day:"2-digit"});
-}
-setInterval(updateClock,1000);
-updateClock();
-
-function workDays(){
-  const value=document.querySelector('input[name="restDay"]:checked').value;
-  if(value==="double") return 22;
-  if(value==="single") return 26;
-  return 30;
-}
-
-function parseMinutes(value){
-  const parts=value.split(":").map(Number);
-  return parts[0]*60+parts[1];
-}
-
-function calculateConfig(){
-  const salary=parseFloat(document.getElementById("salary").value)||0;
-  const start=parseMinutes(document.getElementById("startTime").value);
-  let end=parseMinutes(document.getElementById("endTime").value);
-  if(end<=start) end+=1440;
-  const workMinutes=end-start;
-  const days=workDays();
-  const perSecond=salary/days/workMinutes/60;
-  config={
-    salary,
-    start,
-    end,
-    workMinutes,
-    days,
-    perSecond,
-    perMinute:salary/days/workMinutes,
-    perHour:salary/days/(workMinutes/60)
-  };
-}
-
-function statusNow(){
-  const now=new Date();
-  const day=now.getDay();
-  const minute=now.getHours()*60+now.getMinutes();
-  if(config.days===22&&(day===0||day===6)) return {state:"wk",label:"周末休息中"};
-  if(config.days===26&&day===0) return {state:"wk",label:"周末休息中"};
-  if(minute<config.start) return {state:"o",label:"还没上班"};
-  if(config.end>1440){
-    if(minute>=config.end-1440 && minute<config.start) return {state:"o",label:"已经下班"};
-  }else if(minute>=config.end){
-    return {state:"o",label:"已经下班"};
-  }
-  return {state:"w",label:"努力搬砖中"};
-}
-
-function elapsedSeconds(){
-  const now=new Date();
-  let seconds=now.getHours()*3600+now.getMinutes()*60+now.getSeconds();
-  const start=config.start*60;
-  let end=config.end*60;
-  if(end<=start) end+=86400;
-  if(config.end>1440 && seconds<start) seconds+=86400;
-  if(seconds<start) return 0;
-  if(seconds>=end) return end-start;
-  return seconds-start;
-}
-
-function setMoney(value){
-  const fixed=Math.max(0,value).toFixed(4);
-  if(fixed===lastMoney) return;
-  const [intPart,decimalPart]=fixed.split(".");
-  const intText=Number(intPart).toLocaleString("zh-CN");
-  const dec=decimalPart.slice(0,2);
-  const mil=decimalPart.slice(2,4);
-  const moneyInt=document.getElementById("moneyInt");
-  const moneyDec=document.getElementById("moneyDec");
-  moneyInt.textContent=intText;
-  moneyDec.textContent="."+dec;
-  document.getElementById("moneyMil").textContent=mil;
-  document.getElementById("moneyGlow").textContent="¥"+intText;
-  moneyInt.classList.add("bump");
-  moneyDec.classList.add("bump");
-  setTimeout(()=>{moneyInt.classList.remove("bump");moneyDec.classList.remove("bump")},140);
-  lastMoney=fixed;
-}
-
-function showSpeech(text){
-  const speech=document.getElementById("speech");
-  speech.textContent=text;
-  speech.classList.add("sh");
-  setTimeout(()=>speech.classList.remove("sh"),1800);
-}
-
-function cowAnimate(){
-  actionTick++;
-  if(actionTick%120!==0) return;
-  const action=cowActions[Math.floor(Math.random()*cowActions.length)];
-  if(window.cow3DAction) window.cow3DAction(action);
-  const petActions=["typing","drink","slack","eat","happy"];
-  playMainPetAction(petActions[Math.random()*petActions.length|0]);
-  showSpeech(cowMessages[Math.floor(Math.random()*cowMessages.length)]);
-}
-
-function createParticle(){
-  if(!isRunning) return;
-  const particle=document.createElement("div");
-  particle.className="particle";
-  particle.textContent=moneyBits[Math.floor(Math.random()*moneyBits.length)];
-  particle.style.left=Math.random()*100+"%";
-  particle.style.animationDuration=(2.2+Math.random()*2.2)+"s";
-  particle.style.color=Math.random()>.45?"var(--amber)":"var(--green-2)";
-  document.getElementById("particles").appendChild(particle);
-  setTimeout(()=>particle.remove(),4600);
-}
-
-function updateTicker(){
-  const status=statusNow();
-  const badge=document.getElementById("statusBadge");
-  badge.className="badge "+(status.state==="w"?"":status.state);
-  badge.textContent=status.label;
-
-  const elapsed=elapsedSeconds();
-  const earned=status.state==="wk" ? 0 : elapsed*config.perSecond;
-  const totalSeconds=config.workMinutes*60;
-  const progress=Math.min(100,Math.max(0,elapsed/totalSeconds*100));
-
-  setMoney(earned);
-  document.getElementById("perSecond").textContent=config.perSecond.toFixed(6);
-  document.getElementById("progressFill").style.width=progress+"%";
-  document.getElementById("progressText").textContent=progress.toFixed(1)+"%";
-  document.getElementById("perMinute").textContent=yuan(config.perMinute);
-  document.getElementById("perHour").textContent=yuan(config.perHour);
-  document.getElementById("todayTotal").textContent=yuan(config.salary/config.days);
-  document.getElementById("monthSalary").textContent=yuan(config.salary,0);
-  document.getElementById("elapsedHour").textContent=Math.floor(elapsed/3600);
-  document.getElementById("elapsedMinute").textContent=Math.floor(elapsed%3600/60);
-  document.getElementById("elapsedSecond").textContent=elapsed%60;
-
-  if(Math.random()<.18) createParticle();
-  cowAnimate();
-  checkReminder();
-}
-
-function dismissReminder(){
-  document.getElementById("reminderToast").classList.remove("show");
-}
-
-function showReminder(){
-  const items=[
-    ["该喝水了","补一杯水，顺手活动一下肩颈。"],
-    ["眼睛休息","看远处 20 秒，别一直盯屏幕。"],
-    ["起来走走","站起来走两步，腰背会感谢你。"],
-    ["休息一下","休息 2 分钟，再继续搬砖。"]
-  ];
-  const item=items[Math.random()*items.length|0];
-  document.getElementById("reminderTitle").textContent=item[0];
-  document.getElementById("reminderText").textContent=item[1];
-  document.getElementById("reminderToast").classList.add("show");
-  playMainPetAction("reminder");
-  showSpeech(item[0]);
-  if("Notification" in window && Notification.permission==="granted") new Notification(item[0],{body:item[1]});
-  if("Notification" in window && Notification.permission==="default") Notification.requestPermission();
-}
-
-function checkReminder(){
-  const now=Date.now();
-  const interval=60*60*1000;
-  if(now-lastReminder>=interval){
-    lastReminder=now;
-    localStorage.setItem("salaryTickerLastReminder",String(now));
-    showReminder();
-  }
-}
-
-function toggleTicker(){
-  if(!isRunning){
-    const salaryInput=document.getElementById("salary");
-    const salary=parseFloat(salaryInput.value);
-    if(!salary||salary<=0){
-      salaryInput.focus();
-      salaryInput.style.borderColor="var(--red)";
-      salaryInput.style.boxShadow="0 0 0 4px rgba(255,107,115,.13)";
-      setTimeout(()=>{salaryInput.style.borderColor="";salaryInput.style.boxShadow=""},1500);
-      return;
-    }
-    calculateConfig();
-    isRunning=true;
-    lastMoney="";
-    actionTick=0;
-    document.getElementById("settingsPanel").classList.add("off");
-    document.getElementById("tickerPanel").classList.add("on");
-    setTimeout(()=>window.resizeCow3D&&window.resizeCow3D(),0);
-    playMainPetAction("typing");
-    showSpeech("开工赚钱");
-    updateTicker();
-    timerId=setInterval(updateTicker,100);
-    particleTimer=setInterval(()=>{if(Math.random()<.55) createParticle()},1700);
-  }else{
-    isRunning=false;
-    clearInterval(timerId);
-    clearInterval(particleTimer);
-    document.getElementById("settingsPanel").classList.remove("off");
-    document.getElementById("tickerPanel").classList.remove("on");
-  }
-}
-
-document.addEventListener("keydown",(event)=>{
-  if(event.key==="Enter"&&!isRunning) toggleTicker();
-  if(event.key==="Escape"&&isRunning) toggleTicker();
-});
-
-const demoParams=new URLSearchParams(location.search);
-if(demoParams.get("demo")==="1"){
-  document.getElementById("salary").value=demoParams.get("salary")||"20000";
-  setTimeout(toggleTicker,350);
-}
-
-let mainRive=null;
-let mainRiveInputs={};
-let mainRiveReady=false;
-
-async function initMainMascot(){
-  const mascot=document.getElementById("mainMascot");
-  const canvas=document.getElementById("mainRiveMascot");
-  if(!mascot||!canvas)return;
-  try{
-    const res=await fetch("./assets/mascot/calf-worker.riv",{method:"HEAD",cache:"no-store"});
-    if(!res.ok)return;
-    const mod=await import("https://unpkg.com/@rive-app/canvas@2.21.0/rive.js");
-    mainRive=new mod.Rive({
-      src:"./assets/mascot/calf-worker.riv",
-      canvas,
-      autoplay:true,
-      stateMachines:"PetState",
-      onLoad:()=>{
-        mainRive.resizeDrawingSurfaceToCanvas();
-        mainRiveInputs=Object.fromEntries(mainRive.stateMachineInputs("PetState").map(input=>[input.name,input]));
-        mainRiveReady=true;
-        mascot.classList.add("rive");
-        playMainPetAction("typing");
-      }
-    });
-  }catch(error){
-    console.warn("Main Rive mascot unavailable, using PNG fallback.", error);
-  }
-}
-
-function playMainPetAction(action){
-  const mascot=document.getElementById("mainMascot");
-  if(!mascot)return;
-  if(mainRiveReady){
-    const map={idle:"action_idle",typing:"action_typing",drink:"action_drink",slack:"action_slack",eat:"action_eat",happy:"action_happy",reminder:"action_reminder"};
-    const input=mainRiveInputs[map[action]];
-    if(input&&typeof input.fire==="function")input.fire();
-    return;
-  }
-  const classMap={idle:"typing",typing:"typing",drink:"happy",slack:"slack",eat:"happy",happy:"happy",reminder:"happy"};
-  mascot.className="main-mascot "+(classMap[action]||"typing");
-  setTimeout(()=>{if(on&&!mainRiveReady)mascot.className="main-mascot typing"},1800);
-}
-
-initMainMascot();
+let isRunning=false,timerId,particleTimer,config={},lastMoney='',actionTick=0,lastReminder=Number(localStorage.getItem('salaryTickerLastReminder')||0);
+const moneyBits=['+¥0.01','+¥0.08','+¥0.18','+¥0.66'],cowMessages=['继续搬砖','+¥0.01','摸鱼暂停','咖啡续命','绩效到账','快下班了','老板看不见'];
+function $(id){return document.getElementById(id)}
+function yuan(v,d=2){return '¥'+Number(v||0).toLocaleString('zh-CN',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function updateClock(){const now=new Date();$('clockTime').textContent=now.toLocaleTimeString('zh-CN',{hour12:false});$('clockDate').textContent=now.toLocaleDateString('zh-CN',{weekday:'long',month:'2-digit',day:'2-digit'})}setInterval(updateClock,1000);updateClock();
+function workDays(){const v=document.querySelector('input[name="restDay"]:checked').value;return v==='double'?22:v==='single'?26:30}function parseMinutes(v){const [h,m]=v.split(':').map(Number);return h*60+m}
+function calculateConfig(){const salary=Number($('salary').value)||0,start=parseMinutes($('startTime').value);let end=parseMinutes($('endTime').value);if(end<=start)end+=1440;const workMinutes=end-start,days=workDays();config={salary,start,end,workMinutes,days,perSecond:salary/days/workMinutes/60,perMinute:salary/days/workMinutes,perHour:salary/days/(workMinutes/60)}}
+function statusNow(){const now=new Date(),day=now.getDay(),minute=now.getHours()*60+now.getMinutes();if(config.days===22&&(day===0||day===6))return{state:'wk',label:'周末休息中'};if(config.days===26&&day===0)return{state:'wk',label:'周末休息中'};if(minute<config.start)return{state:'o',label:'还没上班'};if(config.end>1440){if(minute>=config.end-1440&&minute<config.start)return{state:'o',label:'已经下班'}}else if(minute>=config.end)return{state:'o',label:'已经下班'};return{state:'w',label:'努力搬砖中'}}
+function elapsedSeconds(){const now=new Date();let seconds=now.getHours()*3600+now.getMinutes()*60+now.getSeconds(),start=config.start*60,end=config.end*60;if(end<=start)end+=86400;if(config.end>1440&&seconds<start)seconds+=86400;if(seconds<start)return 0;if(seconds>=end)return end-start;return seconds-start}
+function setMoney(value){const fixed=Math.max(0,value).toFixed(4);if(fixed===lastMoney)return;const [intPart,decPart]=fixed.split('.'),intText=Number(intPart).toLocaleString('zh-CN');$('moneyInt').textContent=intText;$('moneyDec').textContent='.'+decPart.slice(0,2);$('moneyMil').textContent=decPart.slice(2);$('moneyGlow').textContent='¥'+intText;$('moneyInt').classList.add('bump');$('moneyDec').classList.add('bump');setTimeout(()=>{$('moneyInt').classList.remove('bump');$('moneyDec').classList.remove('bump')},140);lastMoney=fixed}
+function showSpeech(text){$('speech').textContent=text;$('speech').classList.add('sh');setTimeout(()=>$('speech').classList.remove('sh'),1800)}
+function mascotSvg(){return '<svg viewBox="0 0 240 300" aria-hidden="true"><defs><linearGradient id="mainFur" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fff7e5"/><stop offset=".55" stop-color="#f1c58d"/><stop offset="1" stop-color="#d9874a"/></linearGradient><linearGradient id="mainSuit" x1="0" x2="1"><stop stop-color="#27364b"/><stop offset="1" stop-color="#101923"/></linearGradient><filter id="mainSoft"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".24"/></filter></defs><ellipse cx="120" cy="268" rx="74" ry="15" fill="#000" opacity=".22"/><g class="body-core" filter="url(#mainSoft)"><path class="tail" d="M167 163c23-7 29 12 12 20" fill="none" stroke="#d9874a" stroke-width="11" stroke-linecap="round"/><path class="pet-leg leg-left" d="M97 217c-8 16-11 29-7 43h25c-2-15-2-27 3-40z" fill="#2b394c"/><path class="pet-leg leg-right" d="M140 217c9 16 12 29 8 43h-25c2-15 2-27-3-40z" fill="#1a2533"/><path d="M78 132c9-28 73-28 84 0 13 34 7 82-42 87-50-5-56-53-42-87z" fill="url(#mainSuit)"/><path d="M101 127h38l-8 30h-22z" fill="#fff7ec"/><path d="M114 151h12l7 52-13 12-13-12z" fill="#7ef8c4"/><g class="pet-arm arm-left"><path d="M83 145c-22 17-24 41-8 51 12-8 18-20 22-38z" fill="#f0c18a"/><circle cx="75" cy="195" r="11" fill="#fff2dd"/></g><g class="pet-arm arm-right"><path d="M157 145c22 17 24 41 8 51-12-8-18-20-22-38z" fill="#e7ad73"/><circle cx="165" cy="195" r="11" fill="#fff2dd"/></g><g class="head-group"><path class="pet-ear ear-left" d="M83 70c-25-17-34 12-17 31 13 0 22-8 27-19z" fill="#e4a365"/><path class="pet-ear ear-right" d="M157 70c25-17 34 12 17 31-13 0-22-8-27-19z" fill="#e4a365"/><path class="pet-horn" d="M94 53c-4-20 9-31 20-18-5 7-8 13-8 22z" fill="#fff0b7"/><path class="pet-horn" d="M146 53c4-20-9-31-20-18 5 7 8 13 8 22z" fill="#fff0b7"/><path class="pet-head" d="M71 76c6-38 92-38 98 0 5 34-15 61-49 61S66 110 71 76z" fill="url(#mainFur)"/><path d="M96 99c9-11 39-11 48 0 9 12 2 31-24 31s-33-19-24-31z" fill="#fff4df"/><path d="M105 54c11 15 20 15 31 0 9 19 5 33-16 35-21-2-25-16-15-35z" fill="#7b4b31" opacity=".42"/><ellipse class="eye" cx="101" cy="88" rx="5" ry="7" fill="#17202d"/><ellipse class="eye" cx="139" cy="88" rx="5" ry="7" fill="#17202d"/><ellipse cx="113" cy="110" rx="4" ry="3" fill="#8a4b42"/><ellipse cx="127" cy="110" rx="4" ry="3" fill="#8a4b42"/><path d="M114 121c5 4 8 4 13 0" fill="none" stroke="#8a4b42" stroke-width="3" stroke-linecap="round"/><circle cx="84" cy="103" r="8" fill="#ff9bb4" opacity=".48"/><circle cx="156" cy="103" r="8" fill="#ff9bb4" opacity=".48"/></g><g class="pet-prop prop-cup"><path d="M170 178h23l-4 31h-16z" fill="#8ee7ff"/><path d="M191 184c13 0 12 17 0 17" fill="none" stroke="#8ee7ff" stroke-width="5"/></g><g class="pet-prop prop-snack"><path d="M51 177l22-6 8 29-23 6z" fill="#ffcc63"/><path d="M57 184l16-4M59 193l15-4" stroke="#8a520b" stroke-width="3"/></g><g class="pet-prop prop-phone"><rect x="58" y="161" width="29" height="43" rx="7" fill="#111923" stroke="#61d8ff" stroke-width="3"/><circle cx="73" cy="197" r="2" fill="#61d8ff"/></g><g class="notice-mark"><circle cx="187" cy="69" r="18" fill="#ffca5f"/><path d="M187 57v15M187 80v2" stroke="#744908" stroke-width="5" stroke-linecap="round"/></g><g><path d="M61 213h118l-9 34H70z" fill="#101923" stroke="#33445d" stroke-width="3"/><path d="M73 219h94" stroke="#7ef8c4" stroke-width="3" opacity=".55"/><g class="screen-lines"><path d="M82 228h18M110 228h22M142 228h15M87 236h31M129 236h25" stroke="#61d8ff" stroke-width="2" opacity=".78"/></g></g></g></svg>'}
+function playMainPetAction(action){const map={idle:'typing',typing:'typing',drink:'drink',slack:'slack',eat:'eat',happy:'happy',reminder:'reminder'};$('mainMascot').className='main-mascot '+(map[action]||'typing');if(action!=='typing')setTimeout(()=>{if(isRunning)$('mainMascot').className='main-mascot typing'},2100)}
+function cowAnimate(){actionTick++;if(actionTick%120!==0)return;const a=['typing','drink','slack','eat','happy'];playMainPetAction(a[Math.random()*a.length|0]);showSpeech(cowMessages[Math.random()*cowMessages.length|0])}
+function createParticle(){if(!isRunning)return;const p=document.createElement('div');p.className='particle';p.textContent=moneyBits[Math.random()*moneyBits.length|0];p.style.left=Math.random()*100+'%';p.style.animationDuration=2.2+Math.random()*2.2+'s';p.style.color=Math.random()>.45?'var(--gold)':'var(--green)';$('particles').appendChild(p);setTimeout(()=>p.remove(),4600)}
+function updateTicker(){const s=statusNow(),badge=$('statusBadge');badge.className='badge '+(s.state==='w'?'':s.state);badge.textContent=s.label;const e=elapsedSeconds(),earned=s.state==='wk'?0:e*config.perSecond,total=config.workMinutes*60,progress=Math.min(100,Math.max(0,e/total*100));setMoney(earned);$('perSecond').textContent=config.perSecond.toFixed(6);$('progressFill').style.width=progress+'%';$('progressText').textContent=progress.toFixed(1)+'%';$('perMinute').textContent=yuan(config.perMinute);$('perHour').textContent=yuan(config.perHour);$('todayTotal').textContent=yuan(config.salary/config.days);$('monthSalary').textContent=yuan(config.salary,0);$('elapsedHour').textContent=Math.floor(e/3600);$('elapsedMinute').textContent=Math.floor(e%3600/60);$('elapsedSecond').textContent=e%60;if(Math.random()<.18)createParticle();cowAnimate();checkReminder()}
+function dismissReminder(){$('reminderToast').classList.remove('show')}function showReminder(){const items=[['该喝水了','补一杯水，顺手活动一下肩颈。'],['眼睛休息','看远处 20 秒，别一直盯屏幕。'],['起来走走','站起来走两步，腰背会感谢你。'],['休息一下','休息 2 分钟，再继续搬砖。']],it=items[Math.random()*items.length|0];$('reminderTitle').textContent=it[0];$('reminderText').textContent=it[1];$('reminderToast').classList.add('show');playMainPetAction('reminder');showSpeech(it[0]);if('Notification' in window&&Notification.permission==='granted')new Notification(it[0],{body:it[1]});if('Notification' in window&&Notification.permission==='default')Notification.requestPermission()}function checkReminder(){const now=Date.now();if(now-lastReminder>=60*60*1000){lastReminder=now;localStorage.setItem('salaryTickerLastReminder',String(now));showReminder()}}
+function toggleTicker(){if(!isRunning){const val=parseFloat($('salary').value);if(!val||val<=0){$('salary').focus();return}calculateConfig();isRunning=true;lastMoney='';actionTick=0;$('settingsPanel').classList.add('off');$('tickerPanel').classList.add('on');playMainPetAction('typing');showSpeech('开工赚钱');updateTicker();timerId=setInterval(updateTicker,100);particleTimer=setInterval(()=>{if(Math.random()<.55)createParticle()},1700)}else{isRunning=false;clearInterval(timerId);clearInterval(particleTimer);$('settingsPanel').classList.remove('off');$('tickerPanel').classList.remove('on')}}
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&!isRunning)toggleTicker();if(e.key==='Escape'&&isRunning)toggleTicker()});$('mainMascot').innerHTML=mascotSvg();
 </script>
 </body>
 </html>

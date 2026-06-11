@@ -7,7 +7,7 @@
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800;900&family=JetBrains+Mono:wght@600;800&display=swap");
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#090d14;--panel:#111924;--line:rgba(255,255,255,.13);--text:#f6f8ff;--muted:#95a3b7;--green:#7ef8c4;--gold:#ffca5f;--red:#ff6674}
+:root{--bg:#070a10;--panel:#111923;--line:rgba(255,255,255,.13);--text:#f6f8ff;--muted:#97a6ba;--green:#7ef8c4;--cyan:#61d8ff;--gold:#ffca5f;--pink:#ff8aa8;--red:#ff6674}
 html,body{width:100%;height:100%;overflow:hidden}
 body{
   color:var(--text);
@@ -16,65 +16,112 @@ body{
   user-select:none;
 }
 .pet{
-  width:100vw;
-  height:100vh;
-  display:grid;
-  grid-template-rows:36px 1fr auto;
-  border:1px solid var(--line);
-  border-radius:20px;
-  overflow:hidden;
-  background:linear-gradient(180deg,rgba(17,25,36,.94),rgba(7,10,16,.96));
+  width:100vw;height:100vh;display:grid;grid-template-rows:36px 1fr auto;
+  border:1px solid var(--line);border-radius:20px;overflow:hidden;
+  background:linear-gradient(180deg,rgba(17,25,36,.95),rgba(7,10,16,.97));
 }
 .bar{display:flex;align-items:center;justify-content:space-between;padding:8px 10px 0 14px;color:var(--muted);font-size:12px;font-weight:800}
-.bar b{color:var(--text)}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 18px var(--green)}
+.bar b{color:var(--text)}.dot{display:inline-block;width:8px;height:8px;margin-right:5px;border-radius:50%;background:var(--green);box-shadow:0 0 18px var(--green)}
+.mini-btn{border:0;border-radius:10px;padding:6px 9px;background:rgba(255,255,255,.08);color:var(--text);font-weight:900;cursor:pointer}
 .scene{position:relative;overflow:hidden}
 .scene::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(to bottom,transparent,black 18%,transparent 94%)}
-.bubble{position:absolute;right:22px;top:14px;padding:7px 10px;border-radius:999px;background:linear-gradient(135deg,var(--green),#fff0a4);color:#07110d;font-size:12px;font-weight:900;box-shadow:0 14px 30px rgba(0,0,0,.28)}
+.bubble{position:absolute;right:22px;top:14px;z-index:4;padding:7px 10px;border-radius:999px;background:linear-gradient(135deg,var(--green),#fff0a4);color:#07110d;font-size:12px;font-weight:900;box-shadow:0 14px 30px rgba(0,0,0,.28)}
 .desk-line{position:absolute;left:22px;right:22px;bottom:12px;height:58px;border:1px solid rgba(126,248,196,.16);border-radius:50%;transform:rotateX(72deg);background:radial-gradient(ellipse at center,rgba(126,248,196,.12),transparent 68%)}
-.calf-person{position:absolute;left:50%;bottom:-4px;width:230px;height:286px;transform:translateX(-50%);animation:floaty 2.8s ease-in-out infinite;filter:drop-shadow(0 22px 26px rgba(0,0,0,.38))}
-.calf-person img{width:100%;height:100%;object-fit:contain;display:block;transform-origin:50% 88%}
-.calf-person.work img{animation:workBob .42s ease-in-out infinite alternate}
-.calf-person.happy{animation:happyJump .7s ease-in-out 2}.calf-person.sleepy img{filter:saturate(.86) brightness(.92)}
-.rive-mascot{position:absolute;left:50%;bottom:-4px;width:250px;height:300px;transform:translateX(-50%);filter:drop-shadow(0 22px 26px rgba(0,0,0,.38))}
-.rive-mascot.hidden,.calf-person.hidden{display:none}
-@keyframes floaty{0%,100%{transform:translateX(-50%) translateY(0) rotate(-1deg)}50%{transform:translateX(-50%) translateY(-7px) rotate(1deg)}}
-@keyframes happyJump{0%,100%{transform:translateX(-50%) translateY(0)}45%{transform:translateX(-50%) translateY(-18px) scale(1.03)}}
-@keyframes workBob{to{transform:translateY(3px) rotate(.8deg) scaleY(.995)}}
 .coin-pop{position:absolute;left:38px;top:24px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#fff2a3,var(--gold));color:#744908;font-size:14px;font-weight:900;animation:coinPop 2.1s ease-in-out infinite;box-shadow:0 10px 22px rgba(255,202,95,.24)}
 @keyframes coinPop{0%,100%{transform:translateY(0) rotateY(0);opacity:.9}50%{transform:translateY(-14px) rotateY(180deg);opacity:1}}
+
+.html-pet{
+  position:absolute;left:50%;bottom:-2px;z-index:3;width:246px;height:306px;
+  transform:translateX(-50%);filter:drop-shadow(0 24px 28px rgba(0,0,0,.38));
+}
+.html-pet svg{width:100%;height:100%;overflow:visible}
+.pet-body,.pet-head,.pet-ear,.pet-horn,.pet-arm,.pet-leg,.pet-tail,.pet-face,.pet-prop{transform-box:fill-box;transform-origin:center}
+.body-core{animation:breath 2.6s ease-in-out infinite}
+.head-group{animation:headIdle 2.8s ease-in-out infinite;transform-origin:120px 86px}
+.ear-left{animation:earTwitch 3.8s ease-in-out infinite;transform-origin:82px 70px}.ear-right{animation:earTwitch 4.2s ease-in-out infinite reverse;transform-origin:158px 70px}
+.tail{animation:tailWag 1.8s ease-in-out infinite;transform-origin:172px 166px}
+.arm-left{transform-origin:86px 145px}.arm-right{transform-origin:154px 145px}
+.leg-left{transform-origin:102px 222px}.leg-right{transform-origin:140px 222px}
+.eye{transform-origin:center;animation:blink 5.5s steps(1,end) infinite}
+.prop-cup,.prop-snack,.prop-phone,.notice-mark{opacity:0;transform-box:fill-box;transform-origin:center}
+.screen-lines{animation:screenFlow 1.4s linear infinite}
+.typing .arm-left{animation:typeLeft .34s ease-in-out infinite alternate}.typing .arm-right{animation:typeRight .31s ease-in-out infinite alternate}
+.typing .head-group{animation:headType .9s ease-in-out infinite}.typing .body-core{animation:workBounce .7s ease-in-out infinite}
+.drink .prop-cup{opacity:1;animation:cupDrink 1.8s ease-in-out infinite}.drink .arm-right{animation:drinkArm 1.8s ease-in-out infinite}.drink .head-group{animation:drinkHead 1.8s ease-in-out infinite}
+.slack .prop-phone{opacity:1;animation:phoneFloat 1.4s ease-in-out infinite}.slack .head-group{animation:slackHead 2s ease-in-out infinite}.slack .arm-left{animation:slackArm 1.4s ease-in-out infinite}
+.eat .prop-snack{opacity:1;animation:snackBite 1.55s ease-in-out infinite}.eat .arm-left{animation:eatArm 1.55s ease-in-out infinite}.eat .head-group{animation:eatHead 1.55s ease-in-out infinite}
+.happy .body-core,.reminder .body-core{animation:happyHop .72s ease-in-out infinite}.happy .arm-left,.reminder .arm-left{animation:waveLeft .62s ease-in-out infinite}.happy .arm-right,.reminder .arm-right{animation:waveRight .62s ease-in-out infinite}
+.reminder .notice-mark{opacity:1;animation:noticePulse .8s ease-in-out infinite}
+@keyframes breath{50%{transform:translateY(-3px) scaleY(1.015)}}@keyframes workBounce{50%{transform:translateY(3px) scaleY(.992)}}@keyframes headIdle{50%{transform:rotate(2deg) translateY(-3px)}}@keyframes headType{50%{transform:rotate(-2deg) translateY(2px)}}@keyframes earTwitch{0%,85%,100%{transform:rotate(0)}90%{transform:rotate(12deg)}}@keyframes tailWag{50%{transform:rotate(18deg)}}@keyframes blink{0%,92%,100%{transform:scaleY(1)}94%{transform:scaleY(.08)}}@keyframes typeLeft{to{transform:rotate(9deg) translate(2px,5px)}}@keyframes typeRight{to{transform:rotate(-10deg) translate(-2px,5px)}}@keyframes screenFlow{to{transform:translateY(8px)}}@keyframes cupDrink{0%,100%{transform:translate(0,0) rotate(0)}45%,70%{transform:translate(-15px,-34px) rotate(-18deg)}}@keyframes drinkArm{0%,100%{transform:rotate(0)}45%,70%{transform:rotate(-42deg) translate(-6px,-8px)}}@keyframes drinkHead{45%,70%{transform:rotate(8deg) translateY(2px)}}@keyframes phoneFloat{50%{transform:translateY(-5px) rotate(6deg)}}@keyframes slackHead{50%{transform:rotate(-8deg) translateY(3px)}}@keyframes slackArm{50%{transform:rotate(20deg) translate(8px,2px)}}@keyframes snackBite{0%,100%{transform:translate(0,0) rotate(0)}45%,72%{transform:translate(25px,-38px) rotate(16deg)}}@keyframes eatArm{45%,72%{transform:rotate(38deg) translate(8px,-4px)}}@keyframes eatHead{45%,72%{transform:rotate(-6deg) translateY(3px)}}@keyframes happyHop{50%{transform:translateY(-10px) scale(1.02)}}@keyframes waveLeft{50%{transform:rotate(-34deg) translate(-3px,-7px)}}@keyframes waveRight{50%{transform:rotate(34deg) translate(3px,-7px)}}@keyframes noticePulse{50%{transform:scale(1.16);opacity:.6}}
+
 .money{padding:10px 14px 14px;border-top:1px solid var(--line);background:rgba(255,255,255,.035)}
 .amount{display:flex;align-items:baseline;justify-content:center;gap:2px;font-family:"JetBrains Mono",monospace}
-.amount .cur{font-size:20px;color:var(--green);font-weight:900}
-.amount .num{font-size:42px;font-weight:900;line-height:1}
-.amount .dec{font-size:22px;color:var(--green);font-weight:900}
-.meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px;color:var(--muted);font-size:12px}
-.meta b{color:var(--green);font-family:"JetBrains Mono",monospace}
-.track{height:8px;margin-top:9px;border-radius:999px;background:rgba(255,255,255,.09);overflow:hidden}
-.fill{height:100%;width:0%;border-radius:inherit;background:linear-gradient(90deg,#61d8ff,var(--green),var(--gold))}
-.settings{position:absolute;inset:44px 14px auto;z-index:5;padding:14px;border:1px solid var(--line);border-radius:16px;background:rgba(12,18,27,.96);box-shadow:0 20px 60px rgba(0,0,0,.42)}
-.settings.hidden{display:none}
-.settings label{display:block;margin:9px 0 5px;color:var(--muted);font-size:12px;font-weight:800}
-.settings input,.settings select{width:100%;height:36px;padding:0 10px;border:1px solid var(--line);border-radius:10px;outline:0;background:rgba(255,255,255,.07);color:var(--text);font-family:"JetBrains Mono",monospace;font-weight:800}
-.settings button{width:100%;height:38px;margin-top:12px;border:0;border-radius:12px;background:linear-gradient(135deg,var(--green),var(--gold));color:#06110d;font-weight:900;cursor:pointer}
-.mini-btn{border:0;border-radius:10px;padding:6px 9px;background:rgba(255,255,255,.08);color:var(--text);font-weight:900;cursor:pointer}
-.reminder{position:absolute;left:14px;right:14px;top:44px;z-index:9;display:none;padding:12px 13px;border:1px solid rgba(126,248,196,.35);border-radius:15px;background:linear-gradient(135deg,rgba(126,248,196,.94),rgba(255,240,164,.94));color:#07110d;box-shadow:0 18px 44px rgba(0,0,0,.35)}
-.reminder.show{display:block;animation:noticeIn .28s ease-out}
-.reminder b{display:block;font-size:14px;margin-bottom:3px}.reminder span{font-size:12px;font-weight:800}.reminder button{position:absolute;right:8px;top:8px;border:0;border-radius:8px;background:rgba(0,0,0,.12);padding:3px 7px;font-weight:900;cursor:pointer}
+.amount .cur{font-size:20px;color:var(--green);font-weight:900}.amount .num{font-size:42px;font-weight:900;line-height:1}.amount .dec{font-size:22px;color:var(--green);font-weight:900}
+.meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px;color:var(--muted);font-size:12px}.meta b{color:var(--green);font-family:"JetBrains Mono",monospace}
+.track{height:8px;margin-top:9px;border-radius:999px;background:rgba(255,255,255,.09);overflow:hidden}.fill{height:100%;width:0%;border-radius:inherit;background:linear-gradient(90deg,#61d8ff,var(--green),var(--gold))}
+.settings{position:absolute;inset:44px 14px auto;z-index:5;padding:14px;border:1px solid var(--line);border-radius:16px;background:rgba(12,18,27,.96);box-shadow:0 20px 60px rgba(0,0,0,.42)}.settings.hidden{display:none}
+.settings label{display:block;margin:9px 0 5px;color:var(--muted);font-size:12px;font-weight:800}.settings input,.settings select{width:100%;height:36px;padding:0 10px;border:1px solid var(--line);border-radius:10px;outline:0;background:rgba(255,255,255,.07);color:var(--text);font-family:"JetBrains Mono",monospace;font-weight:800}.settings button{width:100%;height:38px;margin-top:12px;border:0;border-radius:12px;background:linear-gradient(135deg,var(--green),var(--gold));color:#06110d;font-weight:900;cursor:pointer}
+.reminder{position:absolute;left:14px;right:14px;top:44px;z-index:9;display:none;padding:12px 13px;border:1px solid rgba(126,248,196,.35);border-radius:15px;background:linear-gradient(135deg,rgba(126,248,196,.94),rgba(255,240,164,.94));color:#07110d;box-shadow:0 18px 44px rgba(0,0,0,.35)}.reminder.show{display:block;animation:noticeIn .28s ease-out}.reminder b{display:block;font-size:14px;margin-bottom:3px}.reminder span{font-size:12px;font-weight:800}.reminder button{position:absolute;right:8px;top:8px;border:0;border-radius:8px;background:rgba(0,0,0,.12);padding:3px 7px;font-weight:900;cursor:pointer}
 @keyframes noticeIn{from{opacity:0;transform:translateY(-10px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
 </style>
 </head>
 <body>
 <div class="pet">
-  <div class="bar"><span><span class="dot"></span> <b>打工牛</b></span><button class="mini-btn" id="configBtn">设置</button></div>
+  <div class="bar"><span><span class="dot"></span><b>打工牛</b></span><button class="mini-btn" id="configBtn">设置</button></div>
   <div class="scene">
     <div class="desk-line"></div>
     <div class="coin-pop">¥</div>
-    <canvas class="rive-mascot hidden" id="riveMascot" width="500" height="600"></canvas>
-    <div class="calf-person work" id="mascot" aria-label="动漫小牛人桌宠">
-      <img src="./assets/calf-person.png" alt="">
+    <div class="html-pet typing" id="mascot" aria-label="动漫小牛人桌宠">
+      <svg viewBox="0 0 240 300" role="img" aria-hidden="true">
+        <defs>
+          <linearGradient id="fur" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fff7e5"/><stop offset=".55" stop-color="#f1c58d"/><stop offset="1" stop-color="#d9874a"/></linearGradient>
+          <linearGradient id="suit" x1="0" x2="1"><stop stop-color="#27364b"/><stop offset="1" stop-color="#101923"/></linearGradient>
+          <linearGradient id="pink" x1="0" x2="1"><stop stop-color="#ffb6c8"/><stop offset="1" stop-color="#ff7f9e"/></linearGradient>
+          <filter id="soft"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".24"/></filter>
+        </defs>
+        <ellipse cx="120" cy="268" rx="74" ry="15" fill="#000" opacity=".22"/>
+        <g class="body-core" filter="url(#soft)">
+          <path class="tail" d="M167 163c23-7 29 12 12 20" fill="none" stroke="#d9874a" stroke-width="11" stroke-linecap="round"/>
+          <path class="pet-leg leg-left" d="M97 217c-8 16-11 29-7 43h25c-2-15-2-27 3-40z" fill="#2b394c"/>
+          <path class="pet-leg leg-right" d="M140 217c9 16 12 29 8 43h-25c2-15 2-27-3-40z" fill="#1a2533"/>
+          <path d="M78 132c9-28 73-28 84 0 13 34 7 82-42 87-50-5-56-53-42-87z" fill="url(#suit)"/>
+          <path d="M101 127h38l-8 30h-22z" fill="#fff7ec"/>
+          <path d="M114 151h12l7 52-13 12-13-12z" fill="#7ef8c4"/>
+          <g class="pet-arm arm-left">
+            <path d="M83 145c-22 17-24 41-8 51 12-8 18-20 22-38z" fill="#f0c18a"/>
+            <circle cx="75" cy="195" r="11" fill="#fff2dd"/>
+          </g>
+          <g class="pet-arm arm-right">
+            <path d="M157 145c22 17 24 41 8 51-12-8-18-20-22-38z" fill="#e7ad73"/>
+            <circle cx="165" cy="195" r="11" fill="#fff2dd"/>
+          </g>
+          <g class="head-group">
+            <path class="pet-ear ear-left" d="M83 70c-25-17-34 12-17 31 13 0 22-8 27-19z" fill="#e4a365"/>
+            <path class="pet-ear ear-right" d="M157 70c25-17 34 12 17 31-13 0-22-8-27-19z" fill="#e4a365"/>
+            <path class="pet-horn" d="M94 53c-4-20 9-31 20-18-5 7-8 13-8 22z" fill="#fff0b7"/>
+            <path class="pet-horn" d="M146 53c4-20-9-31-20-18 5 7 8 13 8 22z" fill="#fff0b7"/>
+            <path class="pet-head" d="M71 76c6-38 92-38 98 0 5 34-15 61-49 61S66 110 71 76z" fill="url(#fur)"/>
+            <path d="M96 99c9-11 39-11 48 0 9 12 2 31-24 31s-33-19-24-31z" fill="#fff4df"/>
+            <path d="M105 54c11 15 20 15 31 0 9 19 5 33-16 35-21-2-25-16-15-35z" fill="#7b4b31" opacity=".42"/>
+            <ellipse class="eye" cx="101" cy="88" rx="5" ry="7" fill="#17202d"/>
+            <ellipse class="eye" cx="139" cy="88" rx="5" ry="7" fill="#17202d"/>
+            <ellipse cx="113" cy="110" rx="4" ry="3" fill="#8a4b42"/><ellipse cx="127" cy="110" rx="4" ry="3" fill="#8a4b42"/>
+            <path d="M114 121c5 4 8 4 13 0" fill="none" stroke="#8a4b42" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="84" cy="103" r="8" fill="#ff9bb4" opacity=".48"/><circle cx="156" cy="103" r="8" fill="#ff9bb4" opacity=".48"/>
+          </g>
+          <g class="pet-prop prop-cup"><path d="M170 178h23l-4 31h-16z" fill="#8ee7ff"/><path d="M191 184c13 0 12 17 0 17" fill="none" stroke="#8ee7ff" stroke-width="5"/></g>
+          <g class="pet-prop prop-snack"><path d="M51 177l22-6 8 29-23 6z" fill="#ffcc63"/><path d="M57 184l16-4M59 193l15-4" stroke="#8a520b" stroke-width="3"/></g>
+          <g class="pet-prop prop-phone"><rect x="58" y="161" width="29" height="43" rx="7" fill="#111923" stroke="#61d8ff" stroke-width="3"/><circle cx="73" cy="197" r="2" fill="#61d8ff"/></g>
+          <g class="notice-mark"><circle cx="187" cy="69" r="18" fill="#ffca5f"/><path d="M187 57v15M187 80v2" stroke="#744908" stroke-width="5" stroke-linecap="round"/></g>
+          <g>
+            <path d="M61 213h118l-9 34H70z" fill="#101923" stroke="#33445d" stroke-width="3"/>
+            <path d="M73 219h94" stroke="#7ef8c4" stroke-width="3" opacity=".55"/>
+            <g class="screen-lines"><path d="M82 228h18M110 228h22M142 228h15M87 236h31M129 236h25" stroke="#61d8ff" stroke-width="2" opacity=".78"/></g>
+          </g>
+        </g>
+      </svg>
     </div>
-    <div class="bubble" id="bubble">搬砖中</div>
+    <div class="bubble" id="bubble">敲电脑中</div>
     <div class="settings hidden" id="settings">
       <label>月薪</label><input id="salary" type="number" min="0" step="100">
       <label>上班时间</label><input id="startTime" type="time" value="09:00">
@@ -99,24 +146,26 @@ let running=false;
 function loadForm(){ $("salary").value=cfg.salary||""; $("startTime").value=cfg.startTime; $("endTime").value=cfg.endTime; $("rest").value=cfg.rest; $("remindMinutes").value=cfg.remindMinutes||"60"; }
 function days(){ return cfg.rest==="double"?22:cfg.rest==="single"?26:30; }
 function min(v){ const [h,m]=v.split(":").map(Number); return h*60+m; }
-function calc(){
-  const salary=Number(cfg.salary)||0,start=min(cfg.startTime);let end=min(cfg.endTime);if(end<=start)end+=1440;
-  const workMin=end-start,d=days();return{salary,start,end,workMin,d,perSecond:salary/d/workMin/60};
-}
-function elapsed(c){
-  const n=new Date();let s=n.getHours()*3600+n.getMinutes()*60+n.getSeconds();const st=c.start*60;let en=c.end*60;if(en<=st)en+=86400;if(c.end>1440&&s<st)s+=86400;if(s<st)return 0;if(s>=en)return en-st;return s-st;
-}
+function calc(){ const salary=Number(cfg.salary)||0,start=min(cfg.startTime);let end=min(cfg.endTime);if(end<=start)end+=1440;const workMin=end-start,d=days();return{salary,start,end,workMin,d,perSecond:salary/d/workMin/60}; }
+function elapsed(c){ const n=new Date();let s=n.getHours()*3600+n.getMinutes()*60+n.getSeconds();const st=c.start*60;let en=c.end*60;if(en<=st)en+=86400;if(c.end>1440&&s<st)s+=86400;if(s<st)return 0;if(s>=en)return en-st;return s-st; }
 function tick(){
   if(!running)return;
   const c=calc(),e=elapsed(c),earned=e*c.perSecond,progress=Math.min(100,e/(c.workMin*60)*100);
   const fixed=earned.toFixed(2),parts=fixed.split(".");
   $("moneyInt").textContent=Number(parts[0]).toLocaleString("zh-CN");$("moneyDec").textContent="."+parts[1];
-  $("rate").textContent=c.perSecond.toFixed(6);$("fill").style.width=progress+"%";$("status").textContent=progress>=100?"下班啦":"搬砖中";
+  $("rate").textContent=c.perSecond.toFixed(6);$("fill").style.width=progress+"%";$("status").textContent=progress>=100?"下班了":"搬砖中";
   checkReminder();
 }
 $("configBtn").onclick=()=>$("settings").classList.toggle("hidden");
-$("saveBtn").onclick=()=>{cfg={...cfg,salary:$("salary").value,startTime:$("startTime").value,endTime:$("endTime").value,rest:$("rest").value,remindMinutes:$("remindMinutes").value||"60"};localStorage.setItem("salaryPetConfig",JSON.stringify(cfg));running=Number(cfg.salary)>0;$("settings").classList.add("hidden");tick();};
+$("saveBtn").onclick=()=>{cfg={...cfg,salary:$("salary").value,startTime:$("startTime").value,endTime:$("endTime").value,rest:$("rest").value,remindMinutes:$("remindMinutes").value||"60"};localStorage.setItem("salaryPetConfig",JSON.stringify(cfg));running=Number(cfg.salary)>0;$("settings").classList.add("hidden");playPetAction("typing");tick();};
 $("dismissReminder").onclick=()=>$("reminder").classList.remove("show");
+function playPetAction(action){
+  const mascot=$("mascot");
+  mascot.className="html-pet "+action;
+  const labels={idle:"发呆中",typing:"敲电脑中",drink:"喝水中",slack:"摸鱼中",eat:"偷吃中",happy:"到账开心",reminder:"该休息啦"};
+  $("bubble").textContent=labels[action]||"敲电脑中";
+  if(action!=="typing") setTimeout(()=>{ if(running) mascot.className="html-pet typing"; },2100);
+}
 function showReminder(){
   const items=[
     ["该喝水了","补一杯水，顺手活动一下肩颈。"],
@@ -126,7 +175,7 @@ function showReminder(){
   ];
   const item=items[Math.random()*items.length|0];
   $("reminderTitle").textContent=item[0];$("reminderText").textContent=item[1];$("reminder").classList.add("show");
-  $("bubble").textContent=item[0];
+  playPetAction("reminder");
   if("Notification" in window && Notification.permission==="granted") new Notification(item[0],{body:item[1]});
   if("Notification" in window && Notification.permission==="default") Notification.requestPermission();
 }
@@ -134,83 +183,12 @@ function checkReminder(){
   const interval=Math.max(10,Number(cfg.remindMinutes)||60)*60*1000;
   const last=Number(cfg.lastReminder)||0;
   const now=Date.now();
-  if(now-last>=interval){
-    cfg.lastReminder=String(now);
-    localStorage.setItem("salaryPetConfig",JSON.stringify(cfg));
-    showReminder();
-  }
+  if(now-last>=interval){ cfg.lastReminder=String(now); localStorage.setItem("salaryPetConfig",JSON.stringify(cfg)); showReminder(); }
 }
 const qs=new URLSearchParams(location.search);
-if(qs.get("demo")==="1"){
-  cfg={...cfg,salary:qs.get("salary")||"20000",startTime:"09:00",endTime:"18:00",rest:"double"};
-}
+if(qs.get("demo")==="1"){ cfg={...cfg,salary:qs.get("salary")||"",startTime:"09:00",endTime:"18:00",rest:"double"}; }
 loadForm(); if(Number(cfg.salary)>0){running=true}else{$("settings").classList.remove("hidden")} setInterval(tick,250); tick();
-</script>
-<script>
-let riveMascot=null;
-let riveInputs={};
-let riveReady=false;
-const fallbackMascot=$("mascot");
-const riveCanvas=$("riveMascot");
-
-async function initRiveMascot(){
-  try{
-    const res=await fetch("./assets/mascot/calf-worker.riv",{method:"HEAD",cache:"no-store"});
-    if(!res.ok)return;
-    const mod=await import("https://unpkg.com/@rive-app/canvas@2.21.0/rive.js");
-    riveMascot=new mod.Rive({
-      src:"./assets/mascot/calf-worker.riv",
-      canvas:riveCanvas,
-      autoplay:true,
-      stateMachines:"PetState",
-      onLoad:()=>{
-        riveMascot.resizeDrawingSurfaceToCanvas();
-        riveInputs=Object.fromEntries(riveMascot.stateMachineInputs("PetState").map(input=>[input.name,input]));
-        riveReady=true;
-        riveCanvas.classList.remove("hidden");
-        fallbackMascot.classList.add("hidden");
-        playPetAction("idle");
-      }
-    });
-  }catch(error){
-    console.warn("Rive mascot unavailable, using PNG fallback.", error);
-  }
-}
-
-function triggerRive(name){
-  const map={
-    idle:"action_idle",
-    typing:"action_typing",
-    drink:"action_drink",
-    slack:"action_slack",
-    eat:"action_eat",
-    happy:"action_happy",
-    reminder:"action_reminder"
-  };
-  const input=riveInputs[map[name]];
-  if(input && typeof input.fire==="function")input.fire();
-}
-
-function playPetAction(action){
-  if(riveReady){
-    triggerRive(action);
-    return;
-  }
-  const classMap={idle:"work",typing:"work",drink:"happy",slack:"sleepy",eat:"happy",happy:"happy",reminder:"happy"};
-  fallbackMascot.className="calf-person "+(classMap[action]||"work");
-  setTimeout(()=>{if(running&&!riveReady)fallbackMascot.className="calf-person work"},1800);
-}
-
-initRiveMascot();
-
-setInterval(()=>{
-  if(!running)return;
-  const actions=["typing","drink","slack","eat","happy"];
-  const action=actions[Math.random()*actions.length|0];
-  playPetAction(action);
-  const labels={typing:"搬砖中",drink:"喝水中",slack:"摸鱼中",eat:"偷吃中",happy:"+¥0.01"};
-  $("bubble").textContent=labels[action]||"搬砖中";
-},3600);
+setInterval(()=>{ if(!running)return; const actions=["typing","drink","slack","eat","happy"]; playPetAction(actions[Math.random()*actions.length|0]); },3600);
 </script>
 </body>
 </html>
