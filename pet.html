@@ -36,6 +36,8 @@ body{
 .calf-person img{width:100%;height:100%;object-fit:contain;display:block;transform-origin:50% 88%}
 .calf-person.work img{animation:workBob .42s ease-in-out infinite alternate}
 .calf-person.happy{animation:happyJump .7s ease-in-out 2}.calf-person.sleepy img{filter:saturate(.86) brightness(.92)}
+.rive-mascot{position:absolute;left:50%;bottom:-4px;width:250px;height:300px;transform:translateX(-50%);filter:drop-shadow(0 22px 26px rgba(0,0,0,.38))}
+.rive-mascot.hidden,.calf-person.hidden{display:none}
 @keyframes floaty{0%,100%{transform:translateX(-50%) translateY(0) rotate(-1deg)}50%{transform:translateX(-50%) translateY(-7px) rotate(1deg)}}
 @keyframes happyJump{0%,100%{transform:translateX(-50%) translateY(0)}45%{transform:translateX(-50%) translateY(-18px) scale(1.03)}}
 @keyframes workBob{to{transform:translateY(3px) rotate(.8deg) scaleY(.995)}}
@@ -68,6 +70,7 @@ body{
   <div class="scene">
     <div class="desk-line"></div>
     <div class="coin-pop">¥</div>
+    <canvas class="rive-mascot hidden" id="riveMascot" width="500" height="600"></canvas>
     <div class="calf-person work" id="mascot" aria-label="动漫小牛人桌宠">
       <img src="./assets/calf-person.png" alt="">
     </div>
@@ -144,13 +147,69 @@ if(qs.get("demo")==="1"){
 loadForm(); if(Number(cfg.salary)>0){running=true}else{$("settings").classList.remove("hidden")} setInterval(tick,250); tick();
 </script>
 <script>
+let riveMascot=null;
+let riveInputs={};
+let riveReady=false;
+const fallbackMascot=$("mascot");
+const riveCanvas=$("riveMascot");
+
+async function initRiveMascot(){
+  try{
+    const res=await fetch("./assets/mascot/calf-worker.riv",{method:"HEAD",cache:"no-store"});
+    if(!res.ok)return;
+    const mod=await import("https://unpkg.com/@rive-app/canvas@2.21.0/rive.js");
+    riveMascot=new mod.Rive({
+      src:"./assets/mascot/calf-worker.riv",
+      canvas:riveCanvas,
+      autoplay:true,
+      stateMachines:"PetState",
+      onLoad:()=>{
+        riveMascot.resizeDrawingSurfaceToCanvas();
+        riveInputs=Object.fromEntries(riveMascot.stateMachineInputs("PetState").map(input=>[input.name,input]));
+        riveReady=true;
+        riveCanvas.classList.remove("hidden");
+        fallbackMascot.classList.add("hidden");
+        playPetAction("idle");
+      }
+    });
+  }catch(error){
+    console.warn("Rive mascot unavailable, using PNG fallback.", error);
+  }
+}
+
+function triggerRive(name){
+  const map={
+    idle:"action_idle",
+    typing:"action_typing",
+    drink:"action_drink",
+    slack:"action_slack",
+    eat:"action_eat",
+    happy:"action_happy",
+    reminder:"action_reminder"
+  };
+  const input=riveInputs[map[name]];
+  if(input && typeof input.fire==="function")input.fire();
+}
+
+function playPetAction(action){
+  if(riveReady){
+    triggerRive(action);
+    return;
+  }
+  const classMap={idle:"work",typing:"work",drink:"happy",slack:"sleepy",eat:"happy",happy:"happy",reminder:"happy"};
+  fallbackMascot.className="calf-person "+(classMap[action]||"work");
+  setTimeout(()=>{if(running&&!riveReady)fallbackMascot.className="calf-person work"},1800);
+}
+
+initRiveMascot();
+
 setInterval(()=>{
   if(!running)return;
-  const mascot=$("mascot");
-  const moods=["work","happy","sleepy"];
-  mascot.className="calf-person "+moods[Math.random()*moods.length|0];
-  $("bubble").textContent=["+¥0.01","摸鱼中","搬砖中","快下班","老板看不见"][Math.random()*5|0];
-  setTimeout(()=>{if(running)mascot.className="calf-person work"},1800);
+  const actions=["typing","drink","slack","eat","happy"];
+  const action=actions[Math.random()*actions.length|0];
+  playPetAction(action);
+  const labels={typing:"搬砖中",drink:"喝水中",slack:"摸鱼中",eat:"偷吃中",happy:"+¥0.01"};
+  $("bubble").textContent=labels[action]||"搬砖中";
 },3600);
 </script>
 </body>

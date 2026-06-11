@@ -362,7 +362,29 @@ button{border:0}
   z-index:3;
   width:100%;
   height:100%;
+  display:none;
 }
+.main-mascot{
+  position:absolute;
+  left:50%;
+  bottom:28px;
+  z-index:3;
+  width:min(330px,76%);
+  height:420px;
+  transform:translateX(-50%);
+  filter:drop-shadow(0 28px 34px rgba(0,0,0,.42));
+  animation:mainMascotFloat 2.8s ease-in-out infinite;
+}
+.main-mascot img,.main-mascot canvas{width:100%;height:100%;object-fit:contain;display:block}
+.main-mascot canvas{display:none}
+.main-mascot.rive img{display:none}
+.main-mascot.rive canvas{display:block}
+.main-mascot.typing img{animation:mainMascotWork .42s ease-in-out infinite alternate}
+.main-mascot.happy{animation:mainMascotHappy .7s ease-in-out 2}
+.main-mascot.slack img{filter:saturate(.88) brightness(.94)}
+@keyframes mainMascotFloat{0%,100%{transform:translateX(-50%) translateY(0) rotate(-1deg)}50%{transform:translateX(-50%) translateY(-8px) rotate(1deg)}}
+@keyframes mainMascotWork{to{transform:translateY(3px) rotate(.8deg) scaleY(.995)}}
+@keyframes mainMascotHappy{0%,100%{transform:translateX(-50%) translateY(0)}45%{transform:translateX(-50%) translateY(-22px) scale(1.035)}}
 .speech{
   position:absolute;
   left:50%;
@@ -736,6 +758,10 @@ button{border:0}
           <div class="monitor"></div>
           <div class="desk-3d"></div>
           <canvas class="cow-canvas" id="cowCanvas"></canvas>
+          <div class="main-mascot typing" id="mainMascot">
+            <canvas id="mainRiveMascot" width="500" height="600"></canvas>
+            <img src="./assets/calf-person.png" alt="">
+          </div>
           <div class="speech" id="speech">+¥0.01</div>
         </div>
 
@@ -1078,6 +1104,8 @@ function cowAnimate(){
   if(actionTick%120!==0) return;
   const action=cowActions[Math.floor(Math.random()*cowActions.length)];
   if(window.cow3DAction) window.cow3DAction(action);
+  const petActions=["typing","drink","slack","eat","happy"];
+  playMainPetAction(petActions[Math.random()*petActions.length|0]);
   showSpeech(cowMessages[Math.floor(Math.random()*cowMessages.length)]);
 }
 
@@ -1136,6 +1164,7 @@ function showReminder(){
   document.getElementById("reminderTitle").textContent=item[0];
   document.getElementById("reminderText").textContent=item[1];
   document.getElementById("reminderToast").classList.add("show");
+  playMainPetAction("reminder");
   showSpeech(item[0]);
   if("Notification" in window && Notification.permission==="granted") new Notification(item[0],{body:item[1]});
   if("Notification" in window && Notification.permission==="default") Notification.requestPermission();
@@ -1169,6 +1198,7 @@ function toggleTicker(){
     document.getElementById("settingsPanel").classList.add("off");
     document.getElementById("tickerPanel").classList.add("on");
     setTimeout(()=>window.resizeCow3D&&window.resizeCow3D(),0);
+    playMainPetAction("typing");
     showSpeech("开工赚钱");
     updateTicker();
     timerId=setInterval(updateTicker,100);
@@ -1192,6 +1222,52 @@ if(demoParams.get("demo")==="1"){
   document.getElementById("salary").value=demoParams.get("salary")||"20000";
   setTimeout(toggleTicker,350);
 }
+
+let mainRive=null;
+let mainRiveInputs={};
+let mainRiveReady=false;
+
+async function initMainMascot(){
+  const mascot=document.getElementById("mainMascot");
+  const canvas=document.getElementById("mainRiveMascot");
+  if(!mascot||!canvas)return;
+  try{
+    const res=await fetch("./assets/mascot/calf-worker.riv",{method:"HEAD",cache:"no-store"});
+    if(!res.ok)return;
+    const mod=await import("https://unpkg.com/@rive-app/canvas@2.21.0/rive.js");
+    mainRive=new mod.Rive({
+      src:"./assets/mascot/calf-worker.riv",
+      canvas,
+      autoplay:true,
+      stateMachines:"PetState",
+      onLoad:()=>{
+        mainRive.resizeDrawingSurfaceToCanvas();
+        mainRiveInputs=Object.fromEntries(mainRive.stateMachineInputs("PetState").map(input=>[input.name,input]));
+        mainRiveReady=true;
+        mascot.classList.add("rive");
+        playMainPetAction("typing");
+      }
+    });
+  }catch(error){
+    console.warn("Main Rive mascot unavailable, using PNG fallback.", error);
+  }
+}
+
+function playMainPetAction(action){
+  const mascot=document.getElementById("mainMascot");
+  if(!mascot)return;
+  if(mainRiveReady){
+    const map={idle:"action_idle",typing:"action_typing",drink:"action_drink",slack:"action_slack",eat:"action_eat",happy:"action_happy",reminder:"action_reminder"};
+    const input=mainRiveInputs[map[action]];
+    if(input&&typeof input.fire==="function")input.fire();
+    return;
+  }
+  const classMap={idle:"typing",typing:"typing",drink:"happy",slack:"slack",eat:"happy",happy:"happy",reminder:"happy"};
+  mascot.className="main-mascot "+(classMap[action]||"typing");
+  setTimeout(()=>{if(on&&!mainRiveReady)mascot.className="main-mascot typing"},1800);
+}
+
+initMainMascot();
 </script>
 </body>
 </html>
