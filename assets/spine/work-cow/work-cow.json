@@ -1,0 +1,82 @@
+{
+  "skeleton": {
+    "hash": "placeholder-for-designer",
+    "spine": "4.1.00",
+    "x": 0,
+    "y": 0,
+    "width": 400,
+    "height": 340,
+    "images": "./work-cow-fallback.png"
+  },
+  "bones": [
+    { "name": "root" },
+    { "name": "body", "parent": "root", "x": 200, "y": 210 },
+    { "name": "head", "parent": "body", "x": 0, "y": -55 },
+    { "name": "arm_left", "parent": "body", "x": -45, "y": 5 },
+    { "name": "arm_right", "parent": "body", "x": 45, "y": 5 },
+    { "name": "hand_left", "parent": "arm_left", "x": -10, "y": 35 },
+    { "name": "hand_right", "parent": "arm_right", "x": 10, "y": 35 }
+  ],
+  "slots": [
+    { "name": "cow", "bone": "body", "attachment": "cow-full" }
+  ],
+  "skins": {
+    "default": {
+      "cow": {
+        "cow-full": {
+          "type": "region",
+          "x": -200, "y": -240,
+          "width": 400, "height": 340
+        }
+      }
+    }
+  },
+  "animations": {
+    "idle": {
+      "bones": {
+        "head": {
+          "translate": [{ "time": 0, "y": 0 }, { "time": 1.5, "y": -2 }, { "time": 3, "y": 0 }]
+        }
+      }
+    },
+    "typing": {
+      "bones": {
+        "hand_left": {
+          "translate": [{ "time": 0, "y": 0 }, { "time": 0.15, "y": -1.5 }, { "time": 0.3, "y": 0 }]
+        },
+        "hand_right": {
+          "translate": [{ "time": 0.15, "y": 0 }, { "time": 0.3, "y": -1 }, { "time": 0.45, "y": 0 }]
+        }
+      }
+    },
+    "coin_pop": {
+      "bones": {
+        "head": {
+          "translate": [{ "time": 0, "y": 0 }, { "time": 0.2, "y": -4 }, { "time": 0.5, "y": 0 }]
+        }
+      }
+    },
+    "rest_eye": { "bones": {} },
+    "happy": {
+      "bones": {
+        "head": {
+          "translate": [{ "time": 0, "y": 0 }, { "time": 0.15, "y": -5 }, { "time": 0.3, "y": 0 }, { "time": 0.45, "y": -3 }, { "time": 0.6, "y": 0 }]
+        }
+      }
+    },
+    "slack": {
+      "bones": {
+        "head": {
+          "translate": [{ "time": 0, "y": 0 }, { "time": 1, "y": 3 }, { "time": 2, "y": 0 }]
+        }
+      }
+    },
+    "overtime": {
+      "bones": {
+        "head": {
+          "translate": [{ "time": 0, "y": 0 }, { "time": 1, "y": -1 }, { "time": 2, "y": 0 }]
+        }
+      }
+    }
+  }
+}

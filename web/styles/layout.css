@@ -1,0 +1,134 @@
+/* ═══ layout.css — 三栏布局 ═══ */
+
+.app {
+  display: grid;
+  grid-template-columns: 340px 1fr 420px;
+  height: 100vh;
+  gap: 0;
+  overflow: hidden;
+}
+
+/* ── 左侧配置面板 ── */
+.onboard {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 28px 24px;
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+}
+.onboard-header h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.onboard-header p {
+  font-size: .85rem;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: .8rem; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: .04em; }
+
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.input-wrap { position: relative; }
+.input-prefix {
+  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  color: var(--text-muted); font-weight: 600;
+}
+.input-wrap input { padding-left: 28px; width: 100%; }
+
+.radio-group { display: flex; gap: 8px; }
+.radio { display: flex; align-items: center; gap: 4px; cursor: pointer; }
+.radio input { accent-color: var(--primary); width: 16px; height: 16px; }
+.radio span { font-size: .85rem; color: var(--text-dim); }
+
+.preview-box {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 16px;
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.preview-label { font-size: .8rem; color: var(--text-dim); font-weight: 500; }
+.preview-val { font-size: 1.1rem; font-weight: 800; color: var(--primary); }
+
+.milestone-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ms-item {
+  font-size: .75rem; color: var(--text-muted);
+  padding: 8px 10px; background: var(--bg-deep); border-radius: var(--radius-sm);
+  text-align: center;
+}
+
+.btn-start {
+  width: 100%; padding: 14px;
+  background: linear-gradient(135deg, #7CFFB2, #3A8F5E);
+  border-radius: var(--radius);
+  color: #050816;
+  font-size: 1.05rem;
+  font-weight: 700;
+  transition: transform .15s, box-shadow .2s;
+  box-shadow: 0 4px 20px rgba(124, 255, 178, 0.25);
+}
+.btn-start:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(124, 255, 178, 0.35); }
+.btn-start:active { transform: translateY(0); }
+
+.hint { font-size: .72rem; color: var(--text-muted); text-align: center; }
+
+/* ── 中间面板 ── */
+.dashboard {
+  display: flex; flex-direction: column;
+  padding: 28px 32px;
+  gap: 24px;
+  overflow-y: auto;
+  justify-content: center;
+  opacity: .3;
+  pointer-events: none;
+  transition: opacity .4s;
+}
+.dashboard.on { opacity: 1; pointer-events: auto; }
+
+/* ── 右侧剧场 ── */
+.theater-card {
+  display: flex; flex-direction: column;
+  background: var(--bg-card);
+  border-left: 1px solid var(--border);
+  overflow: hidden;
+}
+.theater-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border);
+  font-size: .85rem; font-weight: 600; color: var(--text-dim);
+}
+.live-dot { color: var(--danger); font-size: .72rem; font-weight: 700; letter-spacing: .04em; animation: dotBlink 1.5s ease-in-out infinite; }
+@keyframes dotBlink { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+
+.cow-theater {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 55%, rgba(124, 255, 178, .12), transparent 42%),
+    linear-gradient(180deg, #0B1225, #050816);
+}
+.cow-theater canvas {
+  width: 100%; height: 100%; display: block;
+}
+
+/* ── 响应式 ── */
+@media (max-width: 1100px) {
+  .app { grid-template-columns: 1fr 1fr; }
+  .theater-card { grid-column: 1 / -1; height: 50vh; }
+}
+@media (max-width: 720px) {
+  .app { grid-template-columns: 1fr; }
+  .onboard { grid-column: 1; }
+  .dashboard { grid-column: 1; }
+  .theater-card { grid-column: 1; height: 400px; }
+}

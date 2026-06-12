@@ -1,0 +1,43 @@
+<svg width="400" height="340" viewBox="0 0 400 340" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="headG" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#FFF8EC"/><stop offset=".55" stop-color="#FFF1D6"/><stop offset="1" stop-color="#ECD6AC"/></linearGradient>
+<linearGradient id="vestG" x1="0" x2="1"><stop stop-color="#1C2D4A"/><stop offset="1" stop-color="#121D30"/></linearGradient>
+<linearGradient id="tableG" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#162435"/><stop offset="1" stop-color="#0B1322"/></linearGradient>
+</defs>
+<rect width="400" height="340" fill="#070B12"/>
+<path d="M128,94 C102,78 94,110 114,122 C126,118 128,106 128,94Z" fill="#E8C294" stroke="#1A2233" stroke-width="1.5"/>
+<path d="M272,94 C298,78 306,110 286,122 C274,118 272,106 272,94Z" fill="#DEB080" stroke="#1A2233" stroke-width="1.5"/>
+<path d="M148,56 C140,30 152,18 166,32 C172,38 166,48 158,54" fill="#F7C948" stroke="#1A2233" stroke-width="1.5"/>
+<path d="M252,56 C260,30 248,18 234,32 C228,38 234,48 242,54" fill="#F7C948" stroke="#1A2233" stroke-width="1.5"/>
+<path d="M174,192 C165,192 128,194 118,208 L115,245 L285,245 L282,208 C272,194 235,192 226,192Z" fill="url(#vestG)" stroke="#1A2233" stroke-width="1.5"/>
+<path d="M180,178 L200,196 L200,206 L178,188Z" fill="#FAF5EC" stroke="#1A2233" stroke-width="1"/>
+<path d="M220,178 L200,196 L200,206 L222,188Z" fill="#EEE4D0" stroke="#1A2233" stroke-width="1"/>
+<path d="M196,186 L200,198 L204,186 L200,198 L200,230 L196,232 L200,234 L204,232 L200,230Z" fill="#7CFFB2" stroke="#1A2233" stroke-width="1"/>
+<rect x="176" y="202" width="48" height="18" rx="5" fill="#080F18" stroke="#2A4458" stroke-width="1"/>
+<path d="M200,52 C248,52 275,68 284,100 C290,120 289,146 272,160 C258,172 238,182 200,183 C162,182 142,172 128,160 C111,146 110,120 116,100 C125,68 152,52 200,52Z" fill="url(#headG)" stroke="#1A2233" stroke-width="2"/>
+<ellipse cx="198" cy="80" rx="15" ry="11" fill="#C98A4A" opacity=".52"/>
+<ellipse cx="142" cy="108" rx="12" ry="9" fill="#C98A4A" opacity=".45"/>
+<ellipse cx="264" cy="102" rx="11" ry="8" fill="#C98A4A" opacity=".4"/>
+<ellipse cx="200" cy="148" rx="26" ry="18" fill="#FFFBF0" opacity=".85"/>
+<ellipse cx="191" cy="144" rx="4" ry="3" fill="#C98A4A" opacity=".6"/>
+<ellipse cx="209" cy="144" rx="4" ry="3" fill="#C98A4A" opacity=".6"/>
+<path d="M190,156 C196,160 204,160 210,156" fill="none" stroke="#8A5B42" stroke-width="2.5"/>
+<ellipse cx="160" cy="114" rx="8" ry="9" fill="#FFF" opacity=".85"/>
+<ellipse cx="160" cy="115" rx="5" ry="6.5" fill="#1A2233"/>
+<ellipse cx="158.5" cy="113" rx="2" ry="2" fill="#FFF" opacity=".6"/>
+<path d="M150,111 C156,107 164,107 170,111" fill="none" stroke="#1A2233" stroke-width="1.8"/>
+<ellipse cx="240" cy="114" rx="8" ry="9" fill="#FFF" opacity=".85"/>
+<ellipse cx="240" cy="115" rx="5" ry="6.5" fill="#1A2233"/>
+<ellipse cx="238.5" cy="113" rx="2" ry="2" fill="#FFF" opacity=".6"/>
+<path d="M230,111 C236,107 244,107 250,111" fill="none" stroke="#1A2233" stroke-width="1.8"/>
+<ellipse cx="133" cy="132" rx="9" ry="5.5" fill="#FF9BB4" opacity=".35"/>
+<ellipse cx="267" cy="132" rx="9" ry="5.5" fill="#FF9BB4" opacity=".35"/>
+<rect x="0" y="235" width="400" height="105" fill="url(#tableG)" stroke="#1A2233" stroke-width="1.5"/>
+<rect x="95" y="248" width="210" height="28" rx="6" fill="#0A1018" stroke="#1A2233" stroke-width="1.5"/>
+<path d="M125,242 C122,242 116,244 116,248 L116,256 C116,258 119,259 122,258 L124,249" fill="#FFF1D6" stroke="#1A2233" stroke-width="1.5"/>
+<path d="M275,242 C278,242 284,244 284,248 L284,256 C284,258 281,259 278,258 L276,249" fill="#FFF1D6" stroke="#1A2233" stroke-width="1.5"/>
+<circle cx="142" cy="215" r="7" fill="#F7C948" stroke="#B88820" stroke-width="1.2"/>
+<text x="142" y="217.5" text-anchor="middle" font-family="monospace" font-size="7" font-weight="800" fill="#6B4420">¥</text>
+<circle cx="272" cy="205" r="8" fill="#F7C948" stroke="#B88820" stroke-width="1.2"/>
+<text x="272" y="207.5" text-anchor="middle" font-family="monospace" font-size="8" font-weight="800" fill="#6B4420">¥</text>
+</svg>

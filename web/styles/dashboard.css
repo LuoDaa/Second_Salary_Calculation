@@ -1,0 +1,85 @@
+/* ═══ dashboard.css — 金额面板 ═══ */
+
+.clock-bar {
+  display: flex; align-items: center; gap: 14px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.clock { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; color: var(--text); }
+.date, .day { font-size: .8rem; color: var(--text-muted); }
+.phase-badge {
+  margin-left: auto;
+  padding: 3px 12px;
+  border-radius: 20px;
+  background: rgba(124, 255, 178, 0.1);
+  border: 1px solid rgba(124, 255, 178, 0.2);
+  font-size: .75rem; font-weight: 600; color: var(--primary);
+}
+
+/* 主金额 */
+.hero-amount { text-align: center; padding: 8px 0; }
+.hero-label { font-size: .8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+.hero-val {
+  font-size: 2.8rem; font-weight: 800; color: var(--primary);
+  text-shadow: 0 0 40px rgba(124, 255, 178, 0.3);
+  letter-spacing: -.02em;
+  transition: transform .15s;
+}
+
+/* 统计行 */
+.stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; }
+.stat {
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  text-align: center;
+}
+.stat-label { font-size: .7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+.stat-val { font-size: .95rem; font-weight: 700; color: var(--text); }
+
+/* 进度条 */
+.progress-section {
+  padding: 12px 0;
+}
+.progress-bar {
+  height: 8px;
+  background: var(--bg-deep);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #7CFFB2, #3A8F5E);
+  border-radius: 3px;
+  transition: width .3s ease;
+  position: relative;
+}
+.progress-fill::after {
+  content: '';
+  position: absolute; right: 0; top: 0; bottom: 0;
+  width: 40px;
+  background: linear-gradient(90deg, transparent, rgba(124, 255, 178, 0.6));
+  border-radius: 3px;
+}
+.progress-info {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 8px;
+}
+.progress-pct { font-size: .9rem; font-weight: 700; color: var(--primary); }
+.progress-time { font-size: .85rem; color: var(--text-dim); }
+
+/* 停止按钮 */
+.action-row { text-align: center; padding-top: 8px; }
+.btn-stop {
+  padding: 10px 32px;
+  background: transparent;
+  border: 1px solid var(--border-glow);
+  border-radius: var(--radius);
+  color: var(--text-dim);
+  font-size: .85rem; font-weight: 600;
+  transition: border-color .2s, color .2s;
+}
+.btn-stop:hover { border-color: var(--danger); color: var(--danger); }

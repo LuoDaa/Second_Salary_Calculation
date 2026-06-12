@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>打工牛 · 实时工资</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/web/styles/tokens.css">
+<link rel="stylesheet" href="/web/styles/layout.css">
+<link rel="stylesheet" href="/web/styles/dashboard.css">
+<link rel="stylesheet" href="/web/styles/effects.css">
+</head>
+<body>
+<script type="importmap">
+{
+  "imports": {
+    "pixi.js": "/node_modules/pixi.js/dist/pixi.min.mjs",
+    "@esotericsoftware/spine-pixi-v8": "/node_modules/@esotericsoftware/spine-pixi-v8/dist/esm/spine-pixi-v8.mjs"
+  }
+}
+</script>
+<div class="app">
+  <!-- ── 左侧 · 配置 ── -->
+  <aside class="onboard" id="onboardPanel">
+    <div class="onboard-header">
+      <h1>🐮 打工牛</h1>
+      <p>输入工资，开始打工</p>
+    </div>
+
+    <div class="field">
+      <label>月薪 (税前)</label>
+      <div class="input-wrap">
+        <span class="input-prefix">¥</span>
+        <input id="salary" type="number" min="0" step="100" placeholder="输入月薪">
+      </div>
+    </div>
+
+    <div class="row-2">
+      <div class="field">
+        <label>上班</label>
+        <input id="startTime" type="time" value="09:00">
+      </div>
+      <div class="field">
+        <label>下班</label>
+        <input id="endTime" type="time" value="18:00">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>休息日</label>
+      <div class="radio-group">
+        <label class="radio"><input type="radio" name="restDay" value="double" checked><span>双休</span></label>
+        <label class="radio"><input type="radio" name="restDay" value="single"><span>单休</span></label>
+        <label class="radio"><input type="radio" name="restDay" value="none"><span>无休</span></label>
+      </div>
+    </div>
+
+    <div class="preview-box">
+      <span class="preview-label">每秒收入</span>
+      <span class="preview-val" id="previewRate">¥0.000000</span>
+    </div>
+
+    <div class="milestone-row">
+      <div class="ms-item" id="msMilkTea">🥤 ≈ ¥18</div>
+      <div class="ms-item" id="msCoffee">☕ ≈ ¥25</div>
+      <div class="ms-item" id="msLunch">🍱 ≈ ¥35</div>
+      <div class="ms-item" id="msRent">🏠 ≈ ¥150</div>
+    </div>
+
+    <button class="btn-start" onclick="toggleTicker()" id="btnToggle">⚡ 开始打工</button>
+    <p class="hint">按 Enter 开始 / Esc 停止</p>
+  </aside>
+
+  <!-- ── 中间 · 金额面板 ── -->
+  <main class="dashboard" id="tickerPanel">
+    <div class="clock-bar">
+      <div class="clock" id="clockTime">--:--:--</div>
+      <div class="date" id="clockDate">--/--</div>
+      <div class="day" id="clockDay">---</div>
+      <div class="phase-badge" id="phaseBadge">—</div>
+    </div>
+
+    <div class="hero-amount">
+      <div class="hero-label">今日已赚</div>
+      <div class="hero-val" id="valEarned">¥0.0000</div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-label">每秒</div>
+        <div class="stat-val" id="valPerSecond">¥0.0000</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">每分钟</div>
+        <div class="stat-val" id="valPerMinute">¥0.0000</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">每小时</div>
+        <div class="stat-val" id="valPerHour">¥0.0000</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">月薪</div>
+        <div class="stat-val" id="valMonth">—</div>
+      </div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-info">
+        <span class="progress-pct" id="progressPct">0.0%</span>
+        <span class="progress-time" id="elapsedTime">00:00:00</span>
+      </div>
+    </div>
+
+    <div class="action-row">
+      <button class="btn-stop" onclick="toggleTicker()">⏹ 停止</button>
+    </div>
+  </main>
+
+  <!-- ── 右侧 · 打工牛剧场 ── -->
+  <section class="theater-card">
+    <div class="theater-header">
+      <span>打工牛剧场</span>
+      <span class="live-dot">● 直播中</span>
+    </div>
+    <div id="cowTheater" class="cow-theater">
+      <!-- PixiJS canvas 挂载点 -->
+    </div>
+  </section>
+</div>
+
+<script type="module" src="/web/src/main.js"></script>
+<script>
+/* ── 共享 UI 逻辑（不依赖模块）── */
+
+const $=id=>document.getElementById(id);
+
+/* Clock */
+function updateClock(){
+  const n=new Date();
+  $("clockTime")&&($("clockTime").textContent=n.toLocaleTimeString("zh-CN",{hour12:false}));
+  $("clockDate")&&($("clockDate").textContent=n.toLocaleDateString("zh-CN",{month:"2-digit",day:"2-digit"}));
+  $("clockDay")&&($("clockDay").textContent=n.toLocaleDateString("zh-CN",{weekday:"short"}));
+}
+setInterval(updateClock,1000);updateClock();
+
+/* Onboarding preview */
+function workDays(){
+  const el=document.querySelector('input[name="restDay"]:checked');
+  return el && el.value==="double"?22: el && el.value==="single"?26:30;
+}
+function parseMin(v){const [h,m]=v.split(":").map(Number);return h*60+m;}
+
+function updatePreview(){
+  const s=Number($("salary").value)||0;
+  const st=parseMin($("startTime").value),ed=parseMin($("endTime").value);
+  let et=ed;if(et<=st)et+=1440;
+  const wm=et-st,wd=workDays();
+  const ps=s/wd/wm/60;
+  $("previewRate").textContent="¥"+ps.toFixed(6);
+  const MS=[{id:"msMilkTea",val:18},{id:"msCoffee",val:25},{id:"msLunch",val:35},{id:"msRent",val:150}];
+  MS.forEach(m=>{const el=document.getElementById(m.id);if(el&&ps>0)el.textContent=m.id==="msMilkTea"?"🥤 ≈ "+Math.round(m.val/ps)+"s"
+    :m.id==="msCoffee"?"☕ ≈ "+Math.round(m.val/ps)+"s"
+    :m.id==="msLunch"?"🍱 ≈ "+Math.round(m.val/ps)+"s"
+    :"🏠 ≈ "+Math.round(m.val/ps)+"s";});
+}
+$("salary").addEventListener("input",updatePreview);
+["startTime","endTime"].forEach(id=>$(id).addEventListener("change",updatePreview));
+document.querySelectorAll('input[name="restDay"]').forEach(el=>el.addEventListener("change",updatePreview));
+updatePreview();
+
+/* Toggle */
+let isRunning=false;
+window.toggleTicker=function(){
+  if(!isRunning){
+    const v=Number($("salary").value);
+    if(!v||v<=0){$("salary").focus();return;}
+    isRunning=true;
+    $("onboardPanel").style.display="none";
+    $("tickerPanel").classList.add("on");
+    if(window.sendConfig)window.sendConfig();
+  }else{
+    isRunning=false;
+    $("onboardPanel").style.display="flex";
+    $("tickerPanel").classList.remove("on");
+  }
+};
+
+/* Keyboard */
+document.addEventListener("keydown",e=>{
+  if(e.key==="Enter"&&!isRunning)toggleTicker();
+  if(e.key==="Escape"&&isRunning)toggleTicker();
+});
+</script>
+</body>
+</html>

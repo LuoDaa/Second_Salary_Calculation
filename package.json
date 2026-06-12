@@ -1,0 +1,27 @@
+{
+  "name": "salary-ticker",
+  "version": "1.0.0",
+  "description": "实时工资计算器，包含：",
+  "main": "server.js",
+  "scripts": {
+    "test": "node --test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuoDaa/Second_Salary_Calculation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LuoDaa/Second_Salary_Calculation/issues"
+  },
+  "homepage": "https://github.com/LuoDaa/Second_Salary_Calculation#readme",
+  "dependencies": {
+    "@esotericsoftware/spine-pixi-v8": "^4.3.7",
+    "express": "^5.2.1",
+    "pixi.js": "^8.19.0",
+    "ws": "^8.21.0"
+  }
+}

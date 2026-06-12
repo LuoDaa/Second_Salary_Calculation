@@ -1,0 +1,13 @@
+
+work-cow-fallback.png
+size: 400, 340
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+cow-full
+  rotate: false
+  xy: 0, 0
+  size: 400, 340
+  orig: 400, 340
+  offset: 0, 0
+  index: -1

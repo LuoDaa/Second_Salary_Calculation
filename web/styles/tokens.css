@@ -1,0 +1,73 @@
+/* ═══ tokens.css — 设计令牌 ═══ */
+
+:root {
+  --bg-deep: #050816;
+  --bg-card: #0B1225;
+  --bg-input: #0F1A2E;
+  --border: #1A2D45;
+  --border-glow: #2A4058;
+
+  --text: #E4E8F0;
+  --text-dim: #6B7D95;
+  --text-muted: #445568;
+
+  --primary: #7CFFB2;
+  --primary-dim: #3A8F5E;
+  --primary-glow: rgba(124, 255, 178, 0.18);
+
+  --gold: #F7C948;
+  --gold-dim: #B88820;
+
+  --danger: #FF6B6B;
+  --pink: #FF9BB4;
+  --cyan: #67E8F9;
+
+  --font-ui: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: var(--bg-deep);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+.mono, .stat-val, .hero-val, .timer-num, .progress-pct, .preview-val {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+input, select, button {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+input {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  color: var(--text);
+  outline: none;
+  transition: border-color .2s;
+}
+input:focus { border-color: var(--primary); }
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}

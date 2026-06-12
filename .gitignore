@@ -1,4 +1,5 @@
 .pet-chrome-profile/
+node_modules/
+*.log
 .DS_Store
 Thumbs.db
-*.log

@@ -1,0 +1,59 @@
+/* ═══ effects.css — 金额动效 / Toast / 粒子 ═══ */
+
+/* ── 金额弹出气泡 ── */
+.money-pop {
+  position: absolute;
+  right: 10%;
+  top: 30%;
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--primary);
+  opacity: 0;
+  transform: translateY(10px) scale(.92);
+  pointer-events: none;
+  z-index: 100;
+  text-shadow: 0 0 20px rgba(124, 255, 178, 0.5);
+  transition: all .9s cubic-bezier(.2, .8, .2, 1);
+}
+.money-pop.show {
+  opacity: 1;
+  transform: translateY(-32px) scale(1);
+}
+
+/* ── 里程碑 Toast ── */
+.milestone-toast {
+  position: fixed;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-xl);
+  font-size: .9rem; font-weight: 700; color: var(--primary);
+  box-shadow: 0 8px 32px rgba(0,0,0,.5), 0 0 20px var(--primary-glow);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 200;
+  transition: all .4s cubic-bezier(.2, .8, .2, 1);
+}
+.milestone-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── 金额跳动 ── */
+@keyframes moneyBump {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+.hero-val.bump { animation: moneyBump .25s ease-out; }
+
+/* ── 进度条流光 ── */
+@keyframes progressShine {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
