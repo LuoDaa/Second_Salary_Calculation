@@ -1015,7 +1015,121 @@ svg .eye{animation:blink 5.5s steps(1) infinite}
 </main>
 
 <script>
+const STATE_MSGS={
+  before:{text:"还没上班呢，再睡一会儿吧~",mood:"等待中"},
+  morning:{text:"新的一天，继续搬砖！",mood:"早安打工"},
+  working:{text:"搬砖中，专注！",mood:"认真打工"},
+  lunch:{text:"午休暂停，回血中~",mood:"午休中"},
+  afternoon:{text:"下午继续，冲！",mood:"下午能量"},
+  almost:{text:"快下班了！再坚持一下！",mood:"即将下班"},
+  overtime:{text:"这不是工资，这是精神损失费…",mood:"加班中"},
+  weekend:{text:"周末愉快！牛牛也在休息~",mood:"周末愉快"},
+  off:{text:"已经下班啦，享受生活去！",mood:"下班了"},
+};
+
+const MILESTONES=[
+  {id:"msMilkTea",label:"赚够一杯奶茶",val:18},
+  {id:"msCoffee",label:"赚够一杯咖啡",val:25},
+  {id:"msLunch",label:"赚够一顿午饭",val:35},
+  {id:"msRent",label:"赚够一天房租",val:150},
+];
+let msTriggered={msMilkTea:false,msCoffee:false,msLunch:false,msRent:false};
 const $=id=>document.getElementById(id);
+
+function workDays(){
+  const checked=document.querySelector('input[name="restDay"]:checked');
+  const value=checked?checked.value:"double";
+  return value==="double"?22:value==="single"?26:30;
+}
+function parseMin(v){
+  const [h,m]=String(v||"09:00").split(":").map(Number);
+  return (h||0)*60+(m||0);
+}
+function yuan(v,d=2){
+  return "¥"+Number(v||0).toLocaleString("zh-CN",{minimumFractionDigits:d,maximumFractionDigits:d});
+}
+
+function updateClock(){
+  const n=new Date();
+  if($("clockTime"))$("clockTime").textContent=n.toLocaleTimeString("zh-CN",{hour12:false});
+  if($("clockDate"))$("clockDate").textContent=n.toLocaleDateString("zh-CN",{month:"2-digit",day:"2-digit"});
+  if($("clockDay"))$("clockDay").textContent=n.toLocaleDateString("zh-CN",{weekday:"short"});
+}
+setInterval(updateClock,1000);updateClock();
+
+function updatePreview(){
+  const s=Number($("salary").value)||0;
+  const st=parseMin($("startTime").value),ed=parseMin($("endTime").value);
+  let et=ed;if(et<=st)et+=1440;
+  const wm=Math.max(1,et-st),wd=workDays();
+  const ps=s/wd/wm/60;
+  if($("previewRate"))$("previewRate").textContent="¥"+ps.toFixed(6);
+  MILESTONES.forEach(m=>{
+    const el=$(m.id);
+    if(el)el.textContent=ps>0?("约"+Math.round(m.val/ps)+"秒"):"¥"+m.val;
+  });
+}
+$("salary").addEventListener("input",updatePreview);
+["startTime","endTime"].forEach(id=>$(id).addEventListener("change",updatePreview));
+document.querySelectorAll('input[name="restDay"]').forEach(el=>el.addEventListener("change",updatePreview));
+updatePreview();
+
+let cfg={},isRunning=false,timerId=null;
+let lastMoney="",lastCoinAt=0,lastSec=-1;
+
+function calcConfig(){
+  const s=Number($("salary").value)||0;
+  const st=parseMin($("startTime").value);
+  let ed=parseMin($("endTime").value);
+  if(ed<=st)ed+=1440;
+  const wm=Math.max(1,ed-st),wd=workDays();
+  cfg={salary:s,start:st,end:ed,wm,wd,ps:s/wd/wm/60,pm:s/wd/wm,ph:s/wd/(wm/60),pd:s/wd};
+}
+function elapsed(){
+  const n=new Date();
+  let totS=n.getHours()*3600+n.getMinutes()*60+n.getSeconds();
+  let st=cfg.start*60,ed=cfg.end*60;
+  if(ed<=st)ed+=86400;
+  if(cfg.end>1440&&totS<st)totS+=86400;
+  if(totS<st)return 0;
+  if(totS>=ed)return ed-st;
+  return totS-st;
+}
+function progress(){
+  const e=elapsed(),tot=cfg.wm*60;
+  return Math.min(100,Math.max(0,e/tot*100));
+}
+function timeState(){
+  const n=new Date(),d=n.getDay(),mn=n.getHours()*60+n.getMinutes();
+  const checked=document.querySelector('input[name="restDay"]:checked');
+  const wd=checked?checked.value:"double";
+  if(wd==="double"&&(d===0||d===6))return"weekend";
+  if(wd==="single"&&d===0)return"weekend";
+  const ed=cfg.end>1440?cfg.end-1440:cfg.end;
+  if(mn<cfg.start)return"before";
+  if(mn>=ed)return"off";
+  if(mn>=cfg.start&&mn<cfg.start+120)return"morning";
+  if(mn>=12*60&&mn<13*60+30)return"lunch";
+  const prog=progress();
+  if(prog>=90)return"almost";
+  if(mn>=ed-60)return"almost";
+  if(mn>=13*60+30)return"afternoon";
+  return"working";
+}
+function moodState(prog){
+  if(prog>100)return"overtime";
+  if(prog>=90)return"almost";
+  if(prog>=70)return"excited";
+  if(prog>=30)return"working";
+  return"tired";
+}
+const MOOD_MAP={
+  tired:{tag:"有点困",action:"typing"},
+  working:{tag:"认真打工",action:"typing"},
+  excited:{tag:"小兴奋",action:"happy"},
+  almost:{tag:"快下班了",action:"happy"},
+  overtime:{tag:"加班怨念",action:"slack"},
+};
 
 // ── Cow SVG ──────────────────────────────────────────────────────────────────
 const MascotActor={
