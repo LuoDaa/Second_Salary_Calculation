@@ -513,15 +513,18 @@ button{border:0;cursor:pointer}
   width:min(420px,88%);
   height:420px;
   filter:drop-shadow(0 20px 32px rgba(0,0,0,.42));
-  animation:mascot-float 3.4s ease-in-out infinite;
+  animation:mascot-float 2.7s ease-in-out infinite;
   will-change:transform;
 }
 @keyframes mascot-float{
-  0%,100%{transform:translateX(-50%) translateY(0) rotate(-.4deg) scale(1)}
-  50%{transform:translateX(-50%) translateY(-9px) rotate(.5deg) scale(1.01)}
+  0%,100%{transform:translateX(-50%) translateY(0) rotate(-1.1deg) scale(1)}
+  50%{transform:translateX(-50%) translateY(-18px) rotate(1.2deg) scale(1.018)}
 }
-.mascot-image{width:100%;height:100%;object-fit:contain;display:block;transform-origin:50% 78%;animation:mascot-breathe 4.8s ease-in-out infinite}
-@keyframes mascot-breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.012)}}
+.mascot-image{width:100%;height:100%;object-fit:contain;display:block;transform-origin:50% 78%;animation:mascot-breathe 3.2s ease-in-out infinite;will-change:transform,filter}
+.mascot-wrap.typing .mascot-image,.mascot-wrap.happy .mascot-image,.mascot-wrap.reminder .mascot-image{animation:mascot-breathe 3.2s ease-in-out infinite}
+.mascot-wrap.is-changing .mascot-image{animation:mascot-pop .36s cubic-bezier(.2,.8,.2,1) both}
+@keyframes mascot-breathe{0%,100%{transform:scale(1) translateY(0);filter:saturate(1)}50%{transform:scale(1.035) translateY(-4px);filter:saturate(1.06)}}
+@keyframes mascot-pop{0%{transform:scale(.985) translateY(4px)}70%{transform:scale(1.04) translateY(-6px)}100%{transform:scale(1) translateY(0)}}
 .mascot-wrap svg{width:100%;height:100%;overflow:visible}
 .mascot-wrap.typing svg .arm-left{animation:typeL .34s ease-in-out infinite alternate}
 .mascot-wrap.typing svg .arm-right{animation:typeR .31s ease-in-out infinite alternate}
@@ -1012,6 +1015,8 @@ svg .eye{animation:blink 5.5s steps(1) infinite}
 </main>
 
 <script>
+const $=id=>document.getElementById(id);
+
 // ── Cow SVG ──────────────────────────────────────────────────────────────────
 const MascotActor={
   state:"idle",
@@ -1181,6 +1186,27 @@ function playAction(action){
 }
 window.playAction=playAction;
 
+function startCowIdleMotion(root,img,floatAmp=18){
+  if(!root||!img)return;
+  if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  root.style.animation="none";
+  img.style.animation="none";
+  let start=performance.now();
+  const tick=now=>{
+    const t=(now-start)/1000;
+    const floatPhase=(1-Math.cos(t/2.7*Math.PI*2))/2;
+    const breathPhase=(1-Math.cos(t/3.2*Math.PI*2))/2;
+    const y=-floatAmp*floatPhase;
+    const rot=-1.1+2.3*floatPhase;
+    const scale=1+.018*floatPhase;
+    root.style.transform=`translateX(-50%) translateY(${y.toFixed(2)}px) rotate(${rot.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
+    img.style.transform=`translateY(${(-4*breathPhase).toFixed(2)}px) scale(${(1+.035*breathPhase).toFixed(3)})`;
+    img.style.filter=`saturate(${(1+.06*breathPhase).toFixed(3)})`;
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
 // ── Meeting Cost ──────────────────────────────────────────────────────────────
 function calcMeeting(){
   const cnt=Number($("meetCount").value)||1;
@@ -1252,6 +1278,7 @@ function dismissReminder(){$("reminderToast").classList.remove("show")}
 window.showMeetingPanel=()=>{$("meetingPanel").classList.toggle("on");};
 
 // Init mascot on load (show in onboarding too for fun)
+startCowIdleMotion(document.getElementById("mascotWrap"),document.querySelector(".mascot-image"),18);
 </script>
 </body>
 </html>

@@ -33,12 +33,15 @@ body{
 .html-pet{
   position:absolute;left:50%;bottom:-6px;z-index:3;width:300px;height:300px;
   transform:translateX(-50%);filter:drop-shadow(0 24px 28px rgba(0,0,0,.38));
-  animation:petFloat 3.4s ease-in-out infinite;
+  animation:petFloat 2.7s ease-in-out infinite;
   will-change:transform;
 }
-.pet-image{width:100%;height:100%;object-fit:contain;display:block;animation:petBreathe 4.8s ease-in-out infinite;transform-origin:50% 78%}
-@keyframes petFloat{0%,100%{transform:translateX(-50%) translateY(0) rotate(-.4deg) scale(1)}50%{transform:translateX(-50%) translateY(-8px) rotate(.5deg) scale(1.01)}}
-@keyframes petBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.012)}}
+.pet-image{width:100%;height:100%;object-fit:contain;display:block;animation:petBreathe 3.2s ease-in-out infinite;transform-origin:50% 78%;will-change:transform,filter}
+.html-pet.typing .pet-image,.html-pet.happy .pet-image,.html-pet.reminder .pet-image{animation:petBreathe 3.2s ease-in-out infinite}
+.html-pet.is-changing .pet-image{animation:petPop .36s cubic-bezier(.2,.8,.2,1) both}
+@keyframes petFloat{0%,100%{transform:translateX(-50%) translateY(0) rotate(-1.1deg) scale(1)}50%{transform:translateX(-50%) translateY(-16px) rotate(1.2deg) scale(1.018)}}
+@keyframes petBreathe{0%,100%{transform:scale(1) translateY(0);filter:saturate(1)}50%{transform:scale(1.035) translateY(-4px);filter:saturate(1.06)}}
+@keyframes petPop{0%{transform:scale(.985) translateY(4px)}70%{transform:scale(1.04) translateY(-6px)}100%{transform:scale(1) translateY(0)}}
 .html-pet svg{width:100%;height:100%;overflow:visible}
 .html-pet.is-changing .body-core{animation:settle .24s cubic-bezier(.2,.8,.2,1) both}
 .html-pet.is-changing .head-group{animation:headSettle .24s cubic-bezier(.2,.8,.2,1) both}
@@ -173,6 +176,26 @@ function playPetAction(action){
   if(action!=="typing") setTimeout(()=>{ if(running) playPetAction("typing"); },2100);
 }
 window.playPetAction=playPetAction;
+function startCowIdleMotion(root,img,floatAmp=16){
+  if(!root||!img)return;
+  if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  root.style.animation="none";
+  img.style.animation="none";
+  let start=performance.now();
+  const tick=now=>{
+    const t=(now-start)/1000;
+    const floatPhase=(1-Math.cos(t/2.7*Math.PI*2))/2;
+    const breathPhase=(1-Math.cos(t/3.2*Math.PI*2))/2;
+    const y=-floatAmp*floatPhase;
+    const rot=-1.1+2.3*floatPhase;
+    const scale=1+.018*floatPhase;
+    root.style.transform=`translateX(-50%) translateY(${y.toFixed(2)}px) rotate(${rot.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
+    img.style.transform=`translateY(${(-4*breathPhase).toFixed(2)}px) scale(${(1+.035*breathPhase).toFixed(3)})`;
+    img.style.filter=`saturate(${(1+.06*breathPhase).toFixed(3)})`;
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
 function showReminder(){
   const items=[
     ["该喝水了","补一杯水，顺手活动一下肩颈。"],
@@ -195,6 +218,7 @@ function checkReminder(){
 const qs=new URLSearchParams(location.search);
 if(qs.get("demo")==="1"){ cfg={...cfg,salary:qs.get("salary")||"",startTime:"09:00",endTime:"18:00",rest:"double"}; }
 loadForm(); if(Number(cfg.salary)>0){running=true}else{$("settings").classList.remove("hidden")} setInterval(tick,250); tick();
+startCowIdleMotion($("mascot"),document.querySelector(".pet-image"),16);
 
 </script>
 </body>
