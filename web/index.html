@@ -181,12 +181,12 @@ window.toggleTicker=function(){
     const v=Number($("salary").value);
     if(!v||v<=0){$("salary").focus();return;}
     isRunning=true;
-    $("onboardPanel").style.display="none";
+    document.querySelector(".app").classList.add("is-running");
     $("tickerPanel").classList.add("on");
     if(window.sendConfig)window.sendConfig();
   }else{
     isRunning=false;
-    $("onboardPanel").style.display="flex";
+    document.querySelector(".app").classList.remove("is-running");
     $("tickerPanel").classList.remove("on");
   }
 };

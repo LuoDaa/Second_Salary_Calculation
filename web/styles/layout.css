@@ -7,6 +7,18 @@
   gap: 0;
   overflow: hidden;
 }
+.app.is-running {
+  grid-template-columns: minmax(360px, 1fr) 420px;
+}
+.app.is-running .onboard {
+  display: none;
+}
+.app.is-running .dashboard {
+  grid-column: 1;
+}
+.app.is-running .theater-card {
+  grid-column: 2;
+}
 
 /* ── 左侧配置面板 ── */
 .onboard {
@@ -122,8 +134,8 @@
   left: 50%;
   bottom: 0;
   z-index: 3;
-  width: min(88%, 760px);
-  max-height: 92%;
+  width: min(72%, 300px);
+  max-height: 78%;
   object-fit: contain;
   object-position: center bottom;
   transform: translateX(-50%);
@@ -140,17 +152,21 @@
 }
 @keyframes cowStaticIdle {
   0%, 100% { transform: translateX(-50%) translateY(0) rotate(-.35deg) scale(1); }
-  50% { transform: translateX(-50%) translateY(-10px) rotate(.45deg) scale(1.012); }
+  50% { transform: translateX(-50%) translateY(-5px) rotate(.25deg) scale(1.006); }
 }
 
 /* ── 响应式 ── */
 @media (max-width: 1100px) {
   .app { grid-template-columns: 1fr 1fr; }
+  .app.is-running { grid-template-columns: minmax(0,1fr) 360px; }
   .theater-card { grid-column: 1 / -1; height: 50vh; }
+  .app.is-running .theater-card { grid-column: 2; height: auto; }
 }
 @media (max-width: 720px) {
   .app { grid-template-columns: 1fr; }
+  .app.is-running { grid-template-columns: 1fr; overflow:auto; }
   .onboard { grid-column: 1; }
   .dashboard { grid-column: 1; }
   .theater-card { grid-column: 1; height: 400px; }
+  .app.is-running .theater-card { grid-column: 1; height: 340px; }
 }
