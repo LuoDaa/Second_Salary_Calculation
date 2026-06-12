@@ -173,6 +173,21 @@ const $=id=>document.getElementById(id);
 const defaults={salary:"",startTime:"09:00",endTime:"18:00",rest:"double",remindMinutes:"60",lastReminder:"0"};
 let cfg={...defaults,...JSON.parse(localStorage.getItem("salaryPetConfig")||"{}")};
 let running=false;
+let lastPetMoney="";
+const PetActor={
+  state:"idle",
+  last:{coin:0,rest:0,happy:0},
+  reset(){this.state="idle";this.last={coin:0,rest:0,happy:0};},
+  can(type,cooldown){const now=Date.now();if(now-(this.last[type]||0)<cooldown)return false;this.last[type]=now;return true;},
+  set(action){if(this.state!==action){this.state=action;playPetAction(action);}},
+  update(ctx){
+    if(!ctx.running){this.set("idle");return;}
+    if(ctx.progress>=95&&this.can("happy",10*60*1000)){this.set("happy");return;}
+    if(ctx.progress>0&&ctx.workedMinutes>0&&ctx.workedMinutes%50===0&&ctx.second<2&&this.can("rest",30*60*1000)){this.set("reminder");return;}
+    if(ctx.coin&&this.can("coin",1200)){this.set("happy");return;}
+    this.set("typing");
+  }
+};
 function loadForm(){ $("salary").value=cfg.salary||""; $("startTime").value=cfg.startTime; $("endTime").value=cfg.endTime; $("rest").value=cfg.rest; $("remindMinutes").value=cfg.remindMinutes||"60"; }
 function days(){ return cfg.rest==="double"?22:cfg.rest==="single"?26:30; }
 function min(v){ const [h,m]=v.split(":").map(Number); return h*60+m; }
@@ -181,13 +196,17 @@ function elapsed(c){ const n=new Date();let s=n.getHours()*3600+n.getMinutes()*6
 function tick(){
   if(!running)return;
   const c=calc(),e=elapsed(c),earned=e*c.perSecond,progress=Math.min(100,e/(c.workMin*60)*100);
+  const cents=Math.floor(earned*100),prevCents=lastPetMoney?Math.floor(Number(lastPetMoney)*100):-1;
+  const coinEvent=cents>prevCents;
+  lastPetMoney=String(earned);
   const fixed=earned.toFixed(2),parts=fixed.split(".");
   $("moneyInt").textContent=Number(parts[0]).toLocaleString("zh-CN");$("moneyDec").textContent="."+parts[1];
   $("rate").textContent=c.perSecond.toFixed(6);$("fill").style.width=progress+"%";$("status").textContent=progress>=100?"下班了":"搬砖中";
   checkReminder();
+  PetActor.update({running,progress,workedMinutes:Math.floor(e/60),second:new Date().getSeconds(),coin:coinEvent});
 }
 $("configBtn").onclick=()=>$("settings").classList.toggle("hidden");
-$("saveBtn").onclick=()=>{cfg={...cfg,salary:$("salary").value,startTime:$("startTime").value,endTime:$("endTime").value,rest:$("rest").value,remindMinutes:$("remindMinutes").value||"60"};localStorage.setItem("salaryPetConfig",JSON.stringify(cfg));running=Number(cfg.salary)>0;$("settings").classList.add("hidden");playPetAction("typing");tick();};
+$("saveBtn").onclick=()=>{cfg={...cfg,salary:$("salary").value,startTime:$("startTime").value,endTime:$("endTime").value,rest:$("rest").value,remindMinutes:$("remindMinutes").value||"60"};localStorage.setItem("salaryPetConfig",JSON.stringify(cfg));running=Number(cfg.salary)>0;$("settings").classList.add("hidden");PetActor.reset();playPetAction("typing");tick();};
 $("dismissReminder").onclick=()=>$("reminder").classList.remove("show");
 function playPetAction(action){
   const mascot=$("mascot");
@@ -220,7 +239,7 @@ function checkReminder(){
 const qs=new URLSearchParams(location.search);
 if(qs.get("demo")==="1"){ cfg={...cfg,salary:qs.get("salary")||"",startTime:"09:00",endTime:"18:00",rest:"double"}; }
 loadForm(); if(Number(cfg.salary)>0){running=true}else{$("settings").classList.remove("hidden")} setInterval(tick,250); tick();
-setInterval(()=>{ if(!running)return; const actions=["typing","drink","slack","eat","happy"]; playPetAction(actions[Math.random()*actions.length|0]); },3600);
+
 </script>
 </body>
 </html>
