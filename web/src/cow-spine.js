@@ -39,6 +39,7 @@ export class WorkCow {
     try {
       await this._loadSpine();
       this.isSpineReady = true;
+      this._setDomFallbackVisible(false);
       console.log("[cow] Spine loaded successfully");
       return;
     } catch (e) {
@@ -47,7 +48,13 @@ export class WorkCow {
 
     await this._loadFallback();
     this.isSpineReady = false;
+    this._setDomFallbackVisible(true);
     console.log("[cow] PNG fallback loaded");
+  }
+
+  _setDomFallbackVisible(visible) {
+    const el = document.querySelector(".cow-static-fallback");
+    if (el) el.hidden = !visible;
   }
 
   async _loadSpine() {
